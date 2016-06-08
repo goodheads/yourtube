@@ -1,15 +1,6 @@
  var User       = require('../models/user.server.model'),
-    jwt         = require('jsonwebtoken'),
-    bluebird    = require('bluebird'),
-    Q           = require('q'),
-    fs          = bluebird.promisifyAll(require('fs')),
-    multiparty  = require('multiparty'),
-    path        = require('path'),
-    uuid        = require('node-uuid'),
     cloudinary  = require('cloudinary'),
     gravatar    = require('gravatar'),
-    nodemailer  = require('nodemailer'),
-    _           = require('lodash'),
     secrets     = require('../../config/secrets'),
     token       = require('../../config/token');
 
@@ -71,9 +62,9 @@ module.exports = {
 
   /**
    * Update Logged In User Details
-   * @param   req [description]
-   * @param   res [description]
-   * @return {[type]}     [description]
+   * @param   req
+   * @param   res
+   * @return  json | void
    */
   updateLoggedInUserDetail: function(req, res) {
     User.findById(req.user, function(err, user) {
