@@ -1,4 +1,3 @@
-[![Latest Stable Version](https://img.shields.io/github/release/goodheads/yourtube.svg?style=flat-square)](https://github.com/unicodeveloper/yourtube/releases)
 ![](https://img.shields.io/badge/unicodeveloper-approved-brightgreen.svg)
 
 ## Yourtube
