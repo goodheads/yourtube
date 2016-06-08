@@ -22,7 +22,7 @@ function createJWT(user) {
  |--------------------------------------------------------------------------
  */
 function ensureAuthenticated(req, res, next) {
-
+  console.log(req.header);
   if (!req.header('Authorization')) {
     return res.status(401).send({ message: 'Please make sure your request has an Authorization header' });
   }

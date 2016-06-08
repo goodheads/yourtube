@@ -43,15 +43,8 @@ appRoutes.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
         templateUrl: './views/pages/contact.client.view.html'
     })
     .when('/account', {
-        templateUrl: './views/account/account.client.view.html',
-        controller: 'UserController',
-        resolve: {
-         loginRequired: loginRequired
-       }
-    })
-    .when('/account/edit', {
         templateUrl: './views/account/edit-account.client.view.html',
-        controller: 'UserController',
+        controller: 'ProfileController',
         resolve: {
          loginRequired: loginRequired
        }

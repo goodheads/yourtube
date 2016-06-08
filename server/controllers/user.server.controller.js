@@ -57,39 +57,36 @@ module.exports = {
   },
 
   /**
-   * Fetch Each User Details
+   * Fetch Logged In User Details
    * @param   req
    * @param   res
    * @param   next
    * @return  Void
    */
-  getEachUserDetails: function(req, res, next){
-    var userId = req.params.user_id;
+  getLoggedInUserDetail: function(req, res) {
+    User.findById(req.user, function(err, user) {
+      res.send(user);
+    });
+  },
 
-    User.findOne({_id: userId}, function (err, user) {
-      if(err) {
-        return res.status(404).json('User Not Found');
+  /**
+   * Update Logged In User Details
+   * @param   req [description]
+   * @param   res [description]
+   * @return {[type]}     [description]
+   */
+  updateLoggedInUserDetail: function(req, res) {
+    User.findById(req.user, function(err, user) {
+      if (!user) {
+        return res.status(400).send({ message: 'User not found' });
       }
 
-      var userDetails = {};
+      user.fullName = req.body.fullName || user.fullName;
+      user.email    = req.body.email || user.email;
 
-      userDetails._id             = user._id;
-      userDetails.email           = user.email;
-      userDetails.fullname        = user.fullname;
-      userDetails.username        = user.username;
-      userDetails.user_avatar     = user.user_avatar;
-      userDetails.admin           = user.admin;
-      userDetails.bio             = user.bio;
-      userDetails.hire_status     = user.hire_status;
-      userDetails.address         = user.address;
-      userDetails.github_profile  = user.github_profile;
-      userDetails.website         = user.website;
-      userDetails.twitter_handle  = user.twitter_handle;
-      userDetails.registered      = user.registered_on;
-
-
-      res.json({success: true, user: userDetails});
-      next();
+      user.save(function(err) {
+        res.status(200).send({ message: 'Profile Update Succesfully'});
+      });
     });
   },
 

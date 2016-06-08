@@ -11,8 +11,8 @@ module.exports = function(app) {
   app.post('/api/login',    User.authenticate);
   app.post('/api/register', User.registerUser);
 
-  app.get('/api/me', token.ensureAuthenticated, User.authenticate);
-  app.put('/api/me', token.ensureAuthenticated, User.registerUser);
+  app.get('/api/me', token.ensureAuthenticated, User.getLoggedInUserDetail);
+  app.put('/api/me', token.ensureAuthenticated, User.updateLoggedInUserDetail);
 
   // app.get('/api/users',            User.getAllUsers);
   // app.get('/api/user/:user_id',    User.getEachUserDetails);
