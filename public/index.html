@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en" ng-app="yourtube">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="author" content="Prosper Otemuyiwa">
+  <meta name="HandheldFriendly" content="true">
+  <meta property="og:title" content="Mean Planet For Mean Stack Developers: Meanmap.com">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://meanmap.com">
+  <meta property="og:image" content="https://meanmap.com/img/google-pushpin-md.png">
+  <meta property="og:site_name" content="Meanmap.com">
+  <meta property="og:description" content="Awesome Mean Stack Developers, Projects, Jobs on Meanmap.com.">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="Meanmap - Directory of Mean Stack Developers.">
+  <meta name="fragment" content="!">
+  <meta name="keywords" content="Meanmap, Mean map, Mean Stack, AngularJS, MongoDB, Expressjs, Angularjs, Online Directory, Map, Developers, Mean Stack Developers, Mean StacK Meetups, Mean Planet, Mean Tutorials, Mastering Mean, @meanmap, @meanmapdotcom, Mean Stack Jobs">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <link rel="icon" href="/img/google-pushpin-md.png">
+  <link href='https://fonts.googleapis.com/css?family=Permanent+Marker|Montserrat:400,700|Open+Sans:300italic,400italic,600italic,700italic,400,300,600,700|Gentium+Book+Basic:400,400italic' rel='stylesheet' type='text/css'>
+  <base href="/">
+
+  <title>Meanmap :: Online directory of Mean Stack Developers</title>
+  <link href="favicon.png" rel="shortcut icon">
+  <link href="//fonts.googleapis.com/css?family=Roboto|Montserrat:400,700|Open+Sans:400,300,600" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <link href="//cdn.jsdelivr.net/animatecss/3.2.0/animate.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="vendor/angular-toastr/dist/angular-toastr.css">
+  <link rel="stylesheet" href="vendor/angular-loading-bar/build/loading-bar.min.css">
+
+
+  <!-- JS -->
+  <script src="vendor/angular/angular.js"></script>
+  <script src="vendor/angular-route/angular-route.min.js"></script>
+  <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="vendor/angular-cookies/angular-cookies.min.js"></script>
+  <script src="vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
+  <script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
+  <script src="vendor/angular-loading-bar/build/loading-bar.min.js"></script>
+  <script src="vendor/angular-animate/angular-animate.js"></script>
+  <script src="vendor/angular-messages/angular-messages.min.js"></script>
+  <script src="vendor/angular-aria/angular-aria.js"></script>
+  <script src="vendor/angular-utils-disqus/dirDisqus.js"></script>
+  <script src="vendor/ngstorage/ngStorage.min.js"></script>
+  <script src="vendor/ng-lodash/build/ng-lodash.min.js"></script>
+  <script src="vendor/ng-file-upload/ng-file-upload-shim.min.js"></script>
+  <script src="vendor/ng-file-upload/ng-file-upload.min.js"></script>
+  <script src="vendor/moment/moment.js"></script>
+  <script src="vendor/angular-moment/angular-moment.js"></script>
+  <script src="vendor/marked.js"></script>
+  <script src="vendor/angular-marked.js"></script>
+  <script src="vendor/satellizer/satellizer.js"></script>
+
+  <!-- ANGULAR CUSTOM -->
+  <script src="js/app.js"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/controllers/auth.client.controller.js"></script>
+  <script src="js/controllers/contact.client.controller.js"></script>
+  <script src="js/controllers/profile.client.controller.js"></script>
+  <script src="js/controllers/user.client.controller.js"></script>
+  <script src="js/controllers/nav.client.controller.js"></script>
+  <script src="js/controllers/logout.client.controller.js"></script>
+
+
+  <script src="js/services/auth.client.service.js"></script>
+  <script src="js/services/contact.client.service.js"></script>
+  <script src="js/services/user.client.service.js"></script>
+
+</head>
+
+<body>
+  <div ng-controller="NavbarCtrl" class="navbar navbar-default navbar-static-top">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/"><i class="ion-ios7-pulse-strong"></i> Your <span class="tube">Tube</span> </a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li ng-if="isAuthenticated()"><a href="/profile">Profile</a></li>
+      <li><a href="/page/about">About</a></li>
+    </ul>
+    <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
+      <li><a href="/auth/login">Login</a></li>
+      <li><a href="/auth/signup">Sign up</a></li>
+    </ul>
+    <ul ng-if="isAuthenticated()" class="nav navbar-nav pull-right">
+      <li><a href="/logout">Logout</a></li>
+    </ul>
+  </div>
+
+<!-- ANGULAR DYNAMIC CONTENT -->
+<div ng-view>
+</div>
+<!-- END DYNAMIC CONTENT -->
+
+</body>
+</html>

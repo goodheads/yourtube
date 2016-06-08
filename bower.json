@@ -1,0 +1,59 @@
+{
+  "name": "yourtube",
+  "version": "0.0.0",
+  "homepage": "https://github.com/goodheads/yourtube",
+  "authors": [
+    "Prosper Otemuyiwa <prosperotemuyiwa@gmail.com>"
+  ],
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals"
+  ],
+  "keywords": [
+    "Mean",
+    "tube",
+    "youtube",
+    "youtube",
+    "leaflet"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.3.0",
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "bootstrap": "~3.3.4",
+    "angular-sanitize": "~1.4.0",
+    "angular-material": "~0.9.8",
+    "ui-bootstrap": "~0.13.0",
+    "angular-bootstrap": "~0.13.0",
+    "angularjs-toaster": "~0.4.14",
+    "angular-toastr": "~1.4.1",
+    "angular-moment": "~0.10.1",
+    "angular-leaflet": "~0.8.2",
+    "ngstorage": "~0.3.4",
+    "ng-lodash": "~0.2.3",
+    "angular-messages": "~1.4.0",
+    "ng-file-upload": "~5.0.4",
+    "angular-loading-bar": "~0.7.1",
+    "leaflet-plugins": "~1.3.3",
+    "leaflet.markercluster": "~0.4.0",
+    "ngDialog": "~0.4.0",
+    "angular-utils-disqus": "~0.3.0",
+    "satellizer": "^0.14.1",
+    "angular-cookies": "~1.4.3"
+  },
+  "resolutions": {
+    "angular": "1.4.3",
+    "satellizer": "^0.14.1"
+  }
+}

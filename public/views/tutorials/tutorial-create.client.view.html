@@ -1,0 +1,58 @@
+<!-- Inject Navigation view here -->
+<div data-ng-include data-src="'../../nav.html'"></div>
+
+<!-- Main container for Tutorial Creation Page View -->
+<div class="main-container" style="min-height:580px;">
+  <section>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-12 text-center">
+              <h3> POST NEW MEAN TUTORIAL </h3>
+          </div>
+      </div>
+      <hr/>
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2" style="margin: 0 auto;">
+            <form name="tutorialForm" data-ng-submit="createTutorial()">
+              <!-- Title Form Input -->
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input class="form-control input-lg"  style="width:150%;" data-ng-model="tutorial.title" name="title" type="text" id="title" required>
+                <div class="help-block text-danger" data-ng-if="tutorialForm.title.$dirty" data-ng-messages="tutorialForm.title.$error">
+                  <div data-ng-message="required" class="has-error">Title is required.</div>
+                </div>
+              </div>
+
+              <!-- Content Form Input -->
+              <div class="form-group">
+                <label for="content">Content <em>*Write in Markdown</em></label>
+                <textarea class="form-control"  style="width:150%;" data-ng-model="tutorial.content" name="content" cols="50" rows="12" required></textarea>
+                <div class="help-block text-danger" data-ng-if="tutorialForm.content.$dirty" data-ng-messages="tutorialForm.content.$error">
+                  <div data-ng-message="required" class="has-error">Project Description is required.</div>
+                </div>
+              </div>
+
+              <!-- Create Tutorial Form Input -->
+              <div class="form-group">
+                  <button class="form-control btn btn-lg" type="submit" id="submit-btn" style="width:150%;" data-ng-disabled="tutorialForm.$invalid">Create Tutorial</button>
+              </div>
+            </form>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="social social-1 near-footer">
+    <div class="container">
+      <div class="row">
+        <div class="leader col-sm-12 text-center">
+          <span>"Learn By Doing. Learn More By Teaching"</span>
+          <h5 class='lead-author'>- Prosper Otemuyiwa</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- End Main Container for Tutorial Creation Page View -->
+
+<!-- Inject Footer here -->
+<div data-ng-include data-src="'../../footer.html'"></div>

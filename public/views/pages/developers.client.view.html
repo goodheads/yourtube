@@ -1,0 +1,49 @@
+<!-- Inject Navigation view here -->
+<div data-ng-include data-src="'../nav.html'"></div>
+
+<!-- Main container for Home Page -->
+<div class="main-container" style="min-height:580px;">
+  <section class="features features-6">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-12 text-center">
+              <h4>MEAN STACK DEVELOPERS ON THE PLANET</h4>
+          </div>
+        </div>
+
+        <div class="row" ng-controller="DeveloperController">
+          <div class="col-lg-2 col-md-3 col-sm-4 col-xs-5 team-profile" ng-repeat="dev in allUsers">
+            <div style='text-align:center;'>
+              <a href="/mean-developers/{{ dev.username }}">
+                <img src="{{ dev.user_avatar }}" alt="{{dev.fullname}}" width="150" height="150">
+              </a>
+            </div>
+            <div class="profile-name grid3">{{ dev.username }}</div>
+            <ul class="profile-social-icons">
+              <li><a href="{{dev.twitter_handle || '#'}}" target="_blank"><i class="fa fa-twitter-square"></i></a></li>
+              <li><a href="{{dev.github_profile || '#'}}" target="_blank"><i class="fa fa-github-square">
+              </i></a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <section class="social social-1 near-footer">
+    <div class="container">
+      <div class="row">
+        <div class="leader col-sm-12 text-center">
+          <span>
+            <i class="fa fa-quote-left"></i>
+              A group of wolves is called a Pack. <br class="visible-desktop" />A group of Developers is called a Merge Conflict
+            <i class="fa fa-quote-right"></i></span>
+          <h5 class='lead-author'>- Unknown</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- End Main Container for Home Page View -->
+
+<!-- Inject Footer here -->
+<div data-ng-include data-src="'../footer.html'"></div>

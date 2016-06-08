@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="center-form panel">
+      <div class="panel-body">
+        <h2 class="text-center">Log in</h2>
+        <form method="post" ng-submit="login()" name="loginForm">
+          <div class="form-group has-feedback">
+            <input class="form-control input-lg" type="text" name="email" ng-model="user.email" placeholder="Email" required autofocus>
+            <span class="ion-at form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input class="form-control input-lg" type="password" name="password" ng-model="user.password" placeholder="Password" required>
+            <span class="ion-key form-control-feedback"></span>
+          </div>
+          <button type="submit" ng-disabled="loginForm.$invalid" class="btn btn-lg  btn-block btn-success">Log in</button>
+          <br/>
+          <p class="text-center text-muted">
+            <small>Don't have an account yet? <a href="/auth/signup">Sign up</a></small>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

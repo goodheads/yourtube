@@ -1,0 +1,69 @@
+<!-- Inject Navigation view here -->
+<div data-ng-include data-src="'../../nav.html'"></div>
+
+<!-- Main container for Account Page View -->
+<div class="main-container" style="min-height:580px;">
+  <section class="header header-12">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 text-white">
+          <h4 class="text-white">{{ userDetails.fullname }}</h4>
+          <ul>
+            <li><i class="fa fa-clock-o"></i> Member since
+            <span>{{ userDetails.registered | amDateFormat:'dddd, MMMM D, YYYY'}}</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq faq-1">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="faq">
+            <img class="img-rounded" alt="{{ userDetails.fullname }}" src="{{ userDetails.user_avatar }}" width="200" height="200">
+          </div>
+
+          <div class="faq">
+            <h5>
+              {{ userDetails.fullname }}
+            </h5>
+            <ul>
+              <li><a href="{{ userDetails.github_profile }}" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+              <li><a href="{{ userDetails.website }}" target="_blank"><i class="fa fa-globe"></i> Website / Blog</a></li>
+            </ul>
+            <br/>
+            <ul>
+              <li ng-if="(userDetails.hire_status === 'No')"><i class="fa fa-suitcase"></i> Not Available for Hire</li>
+              <li ng-if="(userDetails.hire_status === 'Yes')"><i class="fa fa-suitcase"></i> Available for Hire</li>
+              <br/>
+            </ul>
+            <ul>
+              <li><i class="fa fa-project"></i><a class="btn btn-default" ng-click="clickToOpen()" ng-show="username">Share Project</a></li>
+              <br/>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="faq">
+            <h5>Tell Us About Yourself</h5>
+              <p marked="userDetails.bio"></p>
+          </div>
+
+          <div class="faq">
+            <h5>Location</h5>
+            <div ng-controller="MapController">
+              <leaflet id="personalMap" markers="personalMapMarker" defaults="defaults" layers="layers"  zoom="80" height="400px" width="540px"></leaflet>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- End Main Container for Account Page View -->
+
+<!-- Inject Footer here -->
+<div data-ng-include data-src="'../../footer.html'"></div>

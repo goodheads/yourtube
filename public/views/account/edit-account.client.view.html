@@ -1,0 +1,91 @@
+<!-- Inject Navigation view here -->
+<div data-ng-include data-src="'../../nav.html'"></div>
+
+<!-- Main container for Profile Editing Page View -->
+<div class="main-container" style="min-height:580px;">
+  <section class="news news-1">
+    <div class="container">
+      <h1>Edit Profile </h1>
+      <hr/>
+
+      <div class="row">
+        <form name="editProfileForm" enctype="multipart/form-data" ng-submit="editProfile()">
+          <div class="col-md-6">
+            <!-- Name Form Input -->
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input class="form-control" name="name" type="text" ng-model="userDetails.fullname" value="{{ userDetails.fullname }}" id="name" required>
+                <div class="help-block text-danger" ng-if="editProfileForm.name.$dirty" ng-messages="editProfileForm.name.$error">
+                  <div ng-message="required">Full name is required.</div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+              <label for="hire">Available for hire</label>
+              <select class="form-control" id="hire" ng-model="userDetails.hire_status" name="hire">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
+            </div>
+
+            <!-- Profile_image Form Input -->
+            <div class="form-group">
+              <label for="profile_image">Profile Image</label>
+              <input name="profile_image" ngf-select="true" ng-model='files' ng-multiple="false" type="file" class="app-prompt-upload" id="profile_image" value="Upload Photo">
+            </div>
+          </div>
+
+          <div class="col-md-6">
+
+              <div class="form-group">
+                <label for="address">Address</label> <small>(For the map)</small>
+                <input class="form-control" name="address" type="text" ng-model="userDetails.address" value="{{ userDetails.address }}" id="address" required>
+                <div class="help-block text-danger" ng-if="editProfileForm.address.$dirty" ng-messages="editProfileForm.address.$error">
+                  <div ng-message="required">Address is required.</div>
+                </div>
+              </div>
+
+
+              <div class="form-group">
+                <label for="twitter">Twitter</label> <small>(Starting with http:// or https://)</small>
+                <input class="form-control" name="twitter" type="text" ng-model="userDetails.twitter_handle" value="{{ userDetails.twitter_handle }}" id="twitter" >
+              </div>
+
+
+              <div class="form-group">
+                <label for="website">Website</label> <small>(Starting with http:// or https://)</small>
+                <input class="form-control" name="website" type="text" ng-model="userDetails.website" value="{{ userDetails.website }}" id="website">
+              </div>
+
+
+              <div class="form-group">
+                <label for="github_url">Github Url</label> <small>(Starting with http:// or https://)</small>
+                <input class="form-control" name="github_url" type="text" ng-model="userDetails.github_profile" value="{{ userDetails.github_profile }}" id="github_url" required>
+                <div class="help-block text-danger" ng-if="editProfileForm.github_url.$dirty" ng-messages="editProfileForm.github_url.$error">
+                  <div ng-message="required">Address is required.</div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="bio">Bio </label> <em>*Markdown Supported</em>
+                <textarea class="form-control" name="bio" cols="50" rows="10" ng-model="userDetails.bio" id="bio" required>{{ userDetails.bio }} </textarea>
+              </div>
+              <div class="help-block text-danger" ng-if="editProfileForm.bio.$dirty" ng-messages="editProfileForm.bio.$error">
+                  <div ng-message="required">Bio is required.</div>
+              </div>
+          </div>
+
+          <!-- Save Changes Form Input -->
+          <div class="form-group">
+            <button class="form-control btn btn-block" ng-disabled="editProfileForm.$invalid" type="submit">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- End Main Container for Profile Editing Page View -->
+
+<!-- Inject Footer here -->
+<div data-ng-include data-src="'../../footer.html'"></div>
