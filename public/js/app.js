@@ -6,7 +6,6 @@ var app = angular
               'ngMessages',
               'angularMoment',
               'angular-loading-bar',
-              'ngFileUpload',
               'ui.bootstrap',
               'appRoutes',
               'ngSanitize',
@@ -15,7 +14,7 @@ var app = angular
               'hc.marked',
               'angularUtils.directives.dirDisqus',
               'satellizer'])
-  .config(['cfpLoadingBarProvider','$httpProvider','$authProvider', function(cfpLoadingBarProvider, $httpProvider, $authProvider){
+  .config(['cfpLoadingBarProvider','$authProvider', function(cfpLoadingBarProvider, $authProvider){
 
     $authProvider.baseUrl = '/';
     $authProvider.loginUrl = '/api/login';
@@ -24,7 +23,6 @@ var app = angular
     $authProvider.authToken = 'Bearer';
     $authProvider.storageType = 'localStorage';
 
-    // $httpProvider.interceptors.push('authInterceptor');
     cfpLoadingBarProvider.includeSpinner   = false;
     cfpLoadingBarProvider.includeBar       = true;
 

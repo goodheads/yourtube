@@ -1,12 +1,9 @@
 require('dotenv').load();
 var  express       = require('express'),
-     jwt           = require('jsonwebtoken'),
      morgan        = require('morgan'),
      bodyParser    = require('body-parser'),
      mongoose      = require('mongoose'),
-     User          = require('./server/models/user.server.model'),
      cors          = require('cors'),
-     secrets       = require('./config/secrets'),
      testdb        = require('./config/testdb'),
      route         = require('./server/routes');
 

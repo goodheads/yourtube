@@ -1,4 +1,4 @@
-app.controller('ProfileController', ['$rootScope','$scope','$http','$location','$window','$localStorage','$routeParams','toastr','User', function($rootScope,$scope,$http,$location,$window,$localStorage,$routeParams,toastr,User) {
+app.controller('ProfileController', ['$scope','$http','toastr','User', function($scope, $http, toastr, User) {
 
   $scope.getProfile = function() {
       User.getProfile()
@@ -6,7 +6,7 @@ app.controller('ProfileController', ['$rootScope','$scope','$http','$location','
           $scope.user = response.data;
         })
         .catch(function(response) {
-          toastr.error(response.data.message, response.status);
+          toastr.error(response.data.message);
         });
   };
 
@@ -16,7 +16,7 @@ app.controller('ProfileController', ['$rootScope','$scope','$http','$location','
         toastr.success('Profile has been updated!');
       })
       .catch(function(response) {
-        toastr.error(response.data.message, response.status);
+        toastr.error(response.data.message);
       });
   };
 

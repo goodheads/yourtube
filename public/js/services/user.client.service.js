@@ -1,4 +1,4 @@
-app.factory('User', ['$http','$q', '$window', function($http, $q, $window) {
+app.factory('User', ['$http', function($http) {
   return {
 
     getProfile: function(){

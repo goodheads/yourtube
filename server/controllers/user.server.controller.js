@@ -82,47 +82,6 @@ module.exports = {
   },
 
   /**
-   * Update User Details
-   * @param  req
-   * @param  res
-   * @param  next
-   * @return Void
-   */
-  updateEachUserDetails: function(req, res, next){
-    var userId      = req.params.user_id;
-    var userDetails = req.body;
-
-    User.update({_id: userId}, userDetails, function (err) {
-      if(err) {
-        return res.status(404).json({success: false, message: 'User Details Not Found', err: err});
-      }
-
-      res.status(200).json({success: true, message: 'Update Successful'});
-      next();
-    });
-  },
-
-  /**
-   * Delete A User
-   * @param  req
-   * @param  res
-   * @param  next
-   * @return Void
-   */
-  deleteEachUserDetails: function(req, res, next){
-    var userId   = req.params.user_id;
-
-    User.remove({_id: userId}, function (err, user) {
-      if(err) {
-        return res.status(404).json({success: false, message: 'User Details Not Found'});
-      }
-
-      res.json({success: true, message: 'Delete Successful'});
-      next();
-    });
-  },
-
-  /**
    * Authenticate a User via Email and Password
    * @param  req
    * @param  res

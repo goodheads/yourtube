@@ -7,7 +7,7 @@ app.controller('AuthController', ['$scope','$location','$auth','toastr', functio
           $location.path('/');
         })
         .catch(function(error) {
-          toastr.error(error.data.message, error.status);
+          toastr.error(error.data.message);
         });
     };
 
