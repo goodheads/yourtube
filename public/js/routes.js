@@ -1,6 +1,6 @@
 var appRoutes = angular.module('appRoutes', []);
 
-appRoutes.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider){
+appRoutes.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider', function($routeProvider, $locationProvider, $sceDelegateProvider){
   $routeProvider
     .when('/', {
         templateUrl: './views/pages/home.client.view.html'
@@ -18,6 +18,13 @@ appRoutes.config(['$routeProvider', '$locationProvider', function($routeProvider
         resolve: {
           skipIfLoggedIn: skipIfLoggedIn
         }
+    })
+    .when('/upload', {
+        templateUrl: './views/pages/upload.client.view.html',
+        controller: 'UploadController',
+        resolve: {
+         loginRequired: loginRequired
+       }
     })
     .when('/logout', {
         template: null,
@@ -61,5 +68,11 @@ appRoutes.config(['$routeProvider', '$locationProvider', function($routeProvider
 
     //eliminate the hashbang
     $locationProvider.html5Mode(true);
+
+    //whitelist youtube url to be trusted by AngularJs
+    $sceDelegateProvider.resourceUrlWhitelist([
+        'self',
+        "http://www.youtube.com/embed/**"
+    ]);
 
 }]);

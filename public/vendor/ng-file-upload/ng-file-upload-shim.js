@@ -1,8 +1,9 @@
 /**!
- * AngularJS file upload/drop directive and service with progress and abort
+ * AngularJS file upload directives and services. Supoorts: file upload/drop/paste, resume, cancel/abort,
+ * progress, resize, thumbnail, preview, validation and CORS
  * FileAPI Flash shim for old browsers not supporting FormData
  * @author  Danial  <danial.farid@gmail.com>
- * @version 5.0.4
+ * @version 12.0.4
  */
 
 (function () {
@@ -23,7 +24,11 @@
     window.FileAPI = {};
   }
 
-  FileAPI.shouldLoad = (window.XMLHttpRequest && !window.FormData) || FileAPI.forceLoad;
+  if (!window.XMLHttpRequest) {
+    throw 'AJAX is not supported. XMLHttpRequest is not defined.';
+  }
+
+  FileAPI.shouldLoad = !window.FormData || FileAPI.forceLoad;
   if (FileAPI.shouldLoad) {
     var initializeUploadListener = function (xhr) {
       if (!xhr.__listeners) {
@@ -97,6 +102,10 @@
             jsonp: false, //removes the callback form param
             cache: true, //removes the ?fileapiXXX in the url
             complete: function (err, fileApiXHR) {
+              if (err && angular.isString(err) && err.indexOf('#2174') !== -1) {
+                // this error seems to be fine the file is being uploaded properly.
+                err = null;
+              }
               xhr.__completed = true;
               if (!err && xhr.__listeners.load)
                 xhr.__listeners.load({
@@ -260,6 +269,7 @@
   }
 
   if (FileAPI.shouldLoad) {
+    FileAPI.hasFlash = hasFlash();
 
     //load FileAPI
     if (FileAPI.forceLoad) {
@@ -286,52 +296,41 @@
       if (FileAPI.staticPath == null) FileAPI.staticPath = basePath;
       script.setAttribute('src', jsUrl || basePath + 'FileAPI.min.js');
       document.getElementsByTagName('head')[0].appendChild(script);
-
-      FileAPI.hasFlash = hasFlash();
     }
 
-    FileAPI.ngfFixIE = function (elem, createFileElemFn, bindAttr, changeFn) {
+    FileAPI.ngfFixIE = function (elem, fileElem, changeFn) {
       if (!hasFlash()) {
         throw 'Adode Flash Player need to be installed. To check ahead use "FileAPI.hasFlash"';
       }
-      var makeFlashInput = function () {
+      var fixInputStyle = function () {
+        var label = fileElem.parent();
         if (elem.attr('disabled')) {
-          elem.$$ngfRefElem.removeClass('js-fileapi-wrapper');
+          if (label) label.removeClass('js-fileapi-wrapper');
         } else {
-          var fileElem = elem.$$ngfRefElem;
-          if (!fileElem) {
-            fileElem = elem.$$ngfRefElem = createFileElemFn();
-            fileElem.addClass('js-fileapi-wrapper');
-            if (!isInputTypeFile(elem)) {
-//						if (fileElem.parent().css('position') === '' || fileElem.parent().css('position') === 'static') {
-//							fileElem.parent().css('position', 'relative');
-//						}
-//						elem.parent()[0].insertBefore(fileElem[0], elem[0]);
-//						elem.css('overflow', 'hidden');
-            }
-            setTimeout(function () {
-              fileElem.bind('mouseenter', makeFlashInput);
-            }, 10);
+          if (!fileElem.attr('__ngf_flash_')) {
+            fileElem.unbind('change');
+            fileElem.unbind('click');
             fileElem.bind('change', function (evt) {
               fileApiChangeFn.apply(this, [evt]);
               changeFn.apply(this, [evt]);
-//						alert('change' +  evt);
             });
-          } else {
-            bindAttr(elem.$$ngfRefElem);
+            fileElem.attr('__ngf_flash_', 'true');
           }
+          label.addClass('js-fileapi-wrapper');
           if (!isInputTypeFile(elem)) {
-            fileElem.css('position', 'absolute')
+            label.css('position', 'absolute')
               .css('top', getOffset(elem[0]).top + 'px').css('left', getOffset(elem[0]).left + 'px')
               .css('width', elem[0].offsetWidth + 'px').css('height', elem[0].offsetHeight + 'px')
               .css('filter', 'alpha(opacity=0)').css('display', elem.css('display'))
               .css('overflow', 'hidden').css('z-index', '900000')
               .css('visibility', 'visible');
+            fileElem.css('width', elem[0].offsetWidth + 'px').css('height', elem[0].offsetHeight + 'px')
+              .css('position', 'absolute').css('top', '0px').css('left', '0px');
           }
         }
       };
 
-      elem.bind('mouseenter', makeFlashInput);
+      elem.bind('mouseenter', fixInputStyle);
 
       var fileApiChangeFn = function (evt) {
         var files = FileAPI.getFiles(evt);
@@ -411,12 +410,6 @@ if (!window.FileReader) {
         if (_this.onerror) _this.onerror(e);
         _this.dispatchEvent(e);
       }
-    };
-    this.readAsArrayBuffer = function (file) {
-      FileAPI.readAsBinaryString(file, listener);
-    };
-    this.readAsBinaryString = function (file) {
-      FileAPI.readAsBinaryString(file, listener);
     };
     this.readAsDataURL = function (file) {
       FileAPI.readAsDataURL(file, listener);

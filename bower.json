@@ -37,7 +37,7 @@
     "ui-bootstrap": "~0.13.0",
     "angular-bootstrap": "~0.13.0",
     "angularjs-toaster": "~0.4.14",
-    "angular-toastr": "~1.4.1",
+    "angular-toastr": "~ 1.4.1",
     "angular-moment": "~0.10.1",
     "angular-leaflet": "~0.8.2",
     "ngstorage": "~0.3.4",
@@ -47,10 +47,13 @@
     "ngDialog": "~0.4.0",
     "angular-utils-disqus": "~0.3.0",
     "satellizer": "^0.14.1",
-    "angular-cookies": "~1.4.3"
+    "angular-cookies": "~1.4.3",
+    "ng-file-upload": "^12.0.4",
+    "cloudinary_ng": "^1.0.0"
   },
   "resolutions": {
     "angular": "1.4.3",
-    "satellizer": "^0.14.1"
+    "satellizer": "^0.14.1",
+    "ng-file-upload": "^12.0.4"
   }
 }

@@ -36,6 +36,10 @@
   <script src="vendor/angular/angular.js"></script>
   <script src="vendor/angular-route/angular-route.min.js"></script>
   <script src="vendor/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+  <script src="vendor/lodash/lodash.js"></script>
+  <!-- cloudinary angular plugin -->
+  <script src="vendor/cloudinary-core/cloudinary-core.js"></script>
+  <script src="vendor/cloudinary_ng/js/angular.cloudinary.js"></script>
   <script src="vendor/angular-cookies/angular-cookies.min.js"></script>
   <script src="vendor/angular-toastr/dist/angular-toastr.tpls.js"></script>
   <script src="vendor/angular-sanitize/angular-sanitize.min.js"></script>
@@ -51,18 +55,19 @@
   <script src="vendor/marked.js"></script>
   <script src="vendor/angular-marked.js"></script>
   <script src="vendor/satellizer/satellizer.js"></script>
+  <!-- angular file upload -->
+  <script src="vendor/ng-file-upload/ng-file-upload-shim.js"></script>
+  <script src="vendor/ng-file-upload/ng-file-upload.js"></script>
+
 
   <!-- ANGULAR CUSTOM -->
   <script src="js/app.js"></script>
   <script src="js/routes.js"></script>
   <script src="js/controllers/auth.client.controller.js"></script>
-  <script src="js/controllers/contact.client.controller.js"></script>
   <script src="js/controllers/profile.client.controller.js"></script>
-  <script src="js/controllers/user.client.controller.js"></script>
+  <script src="js/controllers/upload.client.controller.js"></script>
   <script src="js/controllers/nav.client.controller.js"></script>
   <script src="js/controllers/logout.client.controller.js"></script>
-
-  <script src="js/services/auth.client.service.js"></script>
   <script src="js/services/user.client.service.js"></script>
 
 </head>
@@ -74,6 +79,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li ng-if="isAuthenticated()"><a href="/account">Profile</a></li>
+      <li ng-if="isAuthenticated()"><a href="/upload">Upload</a></li>
       <li><a href="/page/about">About</a></li>
     </ul>
     <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">
