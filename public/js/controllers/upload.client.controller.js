@@ -1,21 +1,18 @@
-app.controller('UploadController', ['$scope', '$rootScope', '$routeParams', '$location', 'Upload', 'cloudinary', '$http',
-  /* Uploading with Angular File Upload */
-  function($scope, $rootScope, $routeParams, $location, $upload, cloudinary, $http) {
+app.controller('UploadController', ['$scope', '$location', 'Upload', 'cloudinary', '$http',
 
-    //$scope.$watch('files', function() {
+  /* Uploading with Angular File Upload */
+  function($scope, $location, Upload, cloudinary, $http) {
+
     $scope.uploadFiles = function(files){
       $scope.files = files;
       if (!$scope.files) return;
       angular.forEach(files, function(file){
         if (file && !file.$error) {
 
-          file.upload = $upload.upload({
+          file.upload = Upload.upload({
             url: "http://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload",
             method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': 'true'
-            },
+            skipAuthorization: true,
             data: {
               upload_preset: cloudinary.config().upload_preset,
               tags: 'myvideo',
@@ -26,8 +23,6 @@ app.controller('UploadController', ['$scope', '$rootScope', '$routeParams', '$lo
             file.status = "Uploading... " + file.progress + "%";
           }).success(function (data, status, headers, config) {
             console.log("success", data);
-            $rootScope.photos = $rootScope.photos || [];
-            data.context = { custom: { photo: $scope.title } };
             file.result = data;
           }).error(function (data, status, headers, config) {
             console.log("success", data);
