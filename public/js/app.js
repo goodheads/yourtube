@@ -16,7 +16,7 @@ var app = angular
               'hc.marked',
               'angularUtils.directives.dirDisqus',
               'satellizer'])
-  .config(['cfpLoadingBarProvider','$authProvider', 'cloudinaryProvider', function(cfpLoadingBarProvider, $authProvider, cloudinaryProvider) {
+  .config(['cfpLoadingBarProvider','$authProvider', 'cloudinaryProvider','$httpProvider', function(cfpLoadingBarProvider, $authProvider, cloudinaryProvider, $httpProvider) {
 
     $authProvider.baseUrl = '/';
     $authProvider.loginUrl = '/api/login';
@@ -24,6 +24,7 @@ var app = angular
     $authProvider.authHeader = 'Authorization';
     $authProvider.authToken = 'Bearer';
     $authProvider.storageType = 'localStorage';
+    //$httpProvider.defaults.useXDomain = true;
 
     // delete $httpProvider.defaults.headers.common['X-Requested-With'];
     // $httpProvider.defaults.headers.common = {};

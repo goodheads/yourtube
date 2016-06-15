@@ -491,12 +491,9 @@ ul {
 .progress-bar{
   width: 100px;
   position: relative;
-  height: 4px;
 }
 .progress-bar .progress{
-  height: 4px;
   background-color: #ff0000;
-  width: 0;
 }
 .preview img, .preview audio, .preview video {
     max-width: 300px;
