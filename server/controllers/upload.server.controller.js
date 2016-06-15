@@ -1,9 +1,6 @@
 var User       = require('../models/user.server.model'),
    cloudinary  = require('cloudinary'),
-   gravatar    = require('gravatar'),
-   multiparty  = require('multiparty'),
-   secrets     = require('../../config/secrets'),
-   token       = require('../../config/token');
+   multiparty  = require('multiparty');
 
 module.exports = {
 

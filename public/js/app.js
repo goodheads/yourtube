@@ -24,13 +24,6 @@ var app = angular
     $authProvider.authHeader = 'Authorization';
     $authProvider.authToken = 'Bearer';
     $authProvider.storageType = 'localStorage';
-    //$httpProvider.defaults.useXDomain = true;
-
-    // delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    // $httpProvider.defaults.headers.common = {};
-    // $httpProvider.defaults.headers.post = {};
-    // $httpProvider.defaults.headers.put = {};
-    // $httpProvider.defaults.headers.patch = {};
 
     cfpLoadingBarProvider.includeSpinner   = false;
     cfpLoadingBarProvider.includeBar       = true;

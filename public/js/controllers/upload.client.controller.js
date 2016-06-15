@@ -1,7 +1,7 @@
-app.controller('UploadController', ['$scope', '$rootScope', '$routeParams', '$location', 'Upload', 'cloudinary', '$http',
+app.controller('UploadController', ['$scope', '$rootScope', '$location', 'Upload','$http',
 
   /* Uploading with Angular File Upload */
-  function($scope, $rootScope, $routeParams, $location, Upload, cloudinary, $http) {
+  function($scope, $rootScope, $location, Upload, $http) {
 
     $scope.uploadFiles = function(files){
       $scope.files = files;
