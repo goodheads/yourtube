@@ -21,7 +21,7 @@
                   <label path="video" style="margin-top:10px;"> Video: </label>
                   <div class="form_controls">
                       <div class="upload_button_holder">
-                          <div href="#" class="upload_button" ngf-select="uploadFiles($files)" title="upload" resetOnClick="true"> Select File to Upload</div>
+                          <div href="#" class="upload_button" ngf-select="uploadFiles($files)" title="upload" multiple="multiple" resetOnClick="true"> Select File to Upload</div>
                       </div>
 
                   </div>
@@ -32,28 +32,31 @@
           <h5>Status</h5>
 
           <div class="file" ng-repeat="file in files">
-              <h3>{{file.name}} {{f.$error}} {{f.$errorParam}}</h3>
-              <div class="status">{{file.status}}</div>
-              <div class="progress-bar">
-                <div class="progress" style="width: {{file.progress}}%" ng-init="progress=0"></div>
+              <h3>{{ file.name }} {{ f.$error }} {{ f.$errorParam }}</h3>
+              <div class="status">{{ file.status }}</div>
+              <div class="progress" ng-show="file.status == 'Done...100%'">
+                <div class="progress-bar progress-bar-success progress-bar-striped" ng-show="file.status == 'Done...100%'" style="width: {{ file.progress }}%" ng-init="progress=0" role="progressbar">
+                  <span class="sr-only">{{ file.progress }}</span>
+                </div>
               </div>
+
+              <div class="progress" ng-show="file.status == 'Uploading...'">
+                <div class="progress-bar progress-bar-info progress-bar-striped active" ng-show="file.status == 'Uploading...'" style="width: {{ file.progress }}%" ng-init="progress=0" role="progressbar">
+                  <span class="sr-only">{{ file.progress }}</span>
+                </div>
+              </div>
+
+              <!-- Add this for video preview-->
               <div class="form_line">
                   <div class="form_controls">
                       <div class="preview">
-                          <img ngf-src="file.result.url || file">
+                          <video controls ngf-src="file.result.response.url || file" autoplay="autoplay">
                       </div>
                   </div>
               </div>
-              <div class="info">
-                <table>
-                  <tr ng-repeat="(key, value) in file.result">
-                    <td> {{key}} </td> <td> {{ value }} </td>
-                  </tr>
-                </table>
-              </div>
           </div>
       </div>
-      
+
     </div>
   </div>
 </div>
