@@ -9,11 +9,18 @@
           ng-multiple="false">
           <h4>New Video</h4>
           <p>Directly upload or drag and drop a video into the dashed area.</p>
-          <form>
+          <form name="uploadForm">
               <div class="form_line">
                   <label path="title"> Title: </label>
                   <div class="form_controls">
-                      <input type="text" class="form-control" placeholder="Title" ng-model="title" />
+                      <input type="text" class="form-control" placeholder="Title" ng-model="video.title" required autofocus>
+                  </div>
+              </div>
+
+              <div class="form_line">
+                  <label path="title"> Description: </label>
+                  <div class="form_controls">
+                      <textarea class="form-control" placeholder="Description" ng-model="video.description" required></textarea>
                   </div>
               </div>
 

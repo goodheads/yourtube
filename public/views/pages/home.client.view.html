@@ -2,55 +2,28 @@
   <div class="panel panel-default">
     <div class="panel-heading">Recommended</div>
     <div class="panel-body">
-      <div class="row">
-        <div class="col-sm-4">
-          <h5>PHP Programming</h5>
-          <!-- 4:3 aspect ratio -->
-          <div class="embed-responsive embed-responsive-4by3">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/7TF00hJI78Y"></iframe>
-          </div>
-        </div>
 
-        <div class="col-sm-4">
-          <h5>Bahd Baddo Baddest</h5>
-          <div class="embed-responsive embed-responsive-4by3">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/n-AvAxGji6c"></iframe>
-          </div>
-        </div>
+      <div class="row" ng-controller="HomeController">
 
-        <div class="col-sm-4">
-          <h5>Funniest Red Cards in Football</h5>
-          <div class="embed-responsive embed-responsive-4by3">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/SkRTGx46Iz4"></iframe>
+          <div class="col-sm-4" ng-repeat="videos in allVideos" class="bs-callout">
+            <h5>{{ videos.title }}</h5>
+            <!-- 4:3 aspect ratio -->
+            <div class="embed-responsive embed-responsive-4by3">
+              <video width="320" height="240" poster="" controls >
+                <source ng-src="{{ videos.url | trustUrl }}" type="video/webm">
+                <source ng-src="{{ videos.url | trustUrl }}" type="video/mp4">
+                <source ng-src="{{ videos.url | trustUrl }}" type="video/ogg">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <p> {{ videos.description }}</p>
           </div>
-        </div>
+
       </div>
 
      <hr />
 
-      <div class="row">
-        <div class="col-sm-4">
-          <h5>Simi - Love Don't Care Official Video</h5>
-          <!-- 4:3 aspect ratio -->
-          <div class="embed-responsive embed-responsive-4by3">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/YthMTby33d8"></iframe>
-          </div>
-        </div>
 
-        <div class="col-sm-4">
-          <h5>Kevin Hart annoys David Beckham</h5>
-          <div class="embed-responsive embed-responsive-4by3">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/WqCQq31ORFk"></iframe>
-          </div>
-        </div>
-
-        <div class="col-sm-4">
-          <h5>Jay-Jay Okocha Magic moments </h5>
-          <div class="embed-responsive embed-responsive-4by3">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/LTj2lnFo-Dk"></iframe>
-          </div>
-        </div>
-      </div>
     </div>
   </div>
     <div class="panel-footer text-center">

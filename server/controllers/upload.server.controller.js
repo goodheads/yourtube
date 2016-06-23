@@ -1,6 +1,7 @@
 var User       = require('../models/user.server.model'),
-   cloudinary  = require('cloudinary'),
-   multiparty  = require('multiparty');
+    Video      = require('../models/video.server.model'),
+    cloudinary  = require('cloudinary'),
+    multiparty  = require('multiparty');
 
 module.exports = {
 
@@ -19,6 +20,8 @@ module.exports = {
       var destPath = '';
       var inputStream;
       var outputStream;
+
+      console.log("Request stuff", req);
       var form = new multiparty.Form();
 
       form.on('error', function(err){
