@@ -1,6 +1,4 @@
-var secrets       = require('../../config/secrets'),
-    slug          = require('slug'),
-    Video         = require('../models/video.server.model');
+var Video         = require('../models/video.server.model');
 
 module.exports = {
   /**

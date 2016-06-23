@@ -22,7 +22,6 @@ app.controller('UploadController', ['$scope', '$rootScope', '$location', 'toastr
           }).success(function (data, status, headers, config) {
             file.status = "Done...100%. Draft Saved! Now, Hit the Publish Button to go live when you are ready";
             file.result = data;
-            console.log(data.response);
             var details = {
               title: $scope.video.title,
               public_id: data.response.public_id,
@@ -41,8 +40,6 @@ app.controller('UploadController', ['$scope', '$rootScope', '$location', 'toastr
             });
 
             file.status = "Your Video is live now!";
-
-            console.log(data);
           }).error(function (data, status, headers, config) {
             file.result = data;
           });
