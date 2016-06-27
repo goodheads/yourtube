@@ -17,9 +17,9 @@ Yourtube is a simpler clone of Youtube.com. Learn how to build your own youtube.
 The tutorial is in progress and can be found on [goodheads.io](http://goodheads.io)
 
 * [How to build your own youtube - Episode 1](http://goodheads.io/2016/06/01/build-youtube-part-1/)
-* [How to build your own youtube - Episode 2](http://goodheads.io/2016/06/01/build-youtube-part-2/)
-* [How to build your own youtube - Episode 3](http://goodheads.io/2016/06/01/build-youtube-part-3/)
-* [How to build your own youtube - Episode 4](http://goodheads.io/2016/06/01/build-youtube-part-4/)
+* [How to build your own youtube - Episode 2](http://goodheads.io/2016/06/08/build-youtube-part-2/)
+* [How to build your own youtube - Episode 3](http://goodheads.io/2016/06/15/build-youtube-part-3/)
+* [How to build your own youtube - Episode 4](http://goodheads.io/2016/06/23/build-youtube-part-4/)
 
 
 ## Security Vulnerabilities
