@@ -24,9 +24,9 @@ app.controller('UploadController', ['$scope', '$rootScope', '$location', 'toastr
             file.result = data;
             console.log(data.response);
             var details = {
-              title: $scope.video.title,
+              title: $scope.video === undefined ? 'Default title' : $scope.video.title,
               public_id: data.response.public_id,
-              description: $scope.video.description,
+              description: $scope.video === undefined ? 'Default description' : $scope.video.description,
               url: data.response.secure_url,
               duration: data.response.duration,
               format: data.response.format
