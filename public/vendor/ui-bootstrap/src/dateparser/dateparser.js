@@ -1,6 +1,6 @@
 angular.module('ui.bootstrap.dateparser', [])
 
-.service('dateParser', ['$locale', 'orderByFilter', function($locale, orderByFilter) {
+.service('dateParser', ['$log', '$locale', 'orderByFilter', function($log, $locale, orderByFilter) {
   // Pulled from https://github.com/mbostock/d3/blob/master/src/format/requote.js
   var SPECIAL_CHARACTERS_REGEXP = /[\\\^\$\*\+\?\|\[\]\(\)\.\{\}]/g;
 
@@ -53,8 +53,16 @@ angular.module('ui.bootstrap.dateparser', [])
       regex: '(?:0|1)[0-9]|2[0-3]',
       apply: function(value) { this.hours = +value; }
     },
+    'hh': {
+      regex: '0[0-9]|1[0-2]',
+      apply: function(value) { this.hours = +value; }
+    },
     'H': {
       regex: '1?[0-9]|2[0-3]',
+      apply: function(value) { this.hours = +value; }
+    },
+    'h': {
+      regex: '[0-9]|1[0-2]',
       apply: function(value) { this.hours = +value; }
     },
     'mm': {
@@ -76,6 +84,18 @@ angular.module('ui.bootstrap.dateparser', [])
     's': {
       regex: '[0-9]|[1-5][0-9]',
       apply: function(value) { this.seconds = +value; }
+    },
+    'a': {
+      regex: $locale.DATETIME_FORMATS.AMPMS.join('|'),
+      apply: function(value) {
+        if (this.hours === 12) {
+          this.hours = 0;
+        }
+
+        if (value === 'PM') {
+          this.hours += 12;
+        }
+      }
     }
   };
 
@@ -107,14 +127,14 @@ angular.module('ui.bootstrap.dateparser', [])
   }
 
   this.parse = function(input, format, baseDate) {
-    if ( !angular.isString(input) || !format ) {
+    if (!angular.isString(input) || !format) {
       return input;
     }
 
     format = $locale.DATETIME_FORMATS[format] || format;
     format = format.replace(SPECIAL_CHARACTERS_REGEXP, '\\$&');
 
-    if ( !this.parsers[format] ) {
+    if (!this.parsers[format]) {
       this.parsers[format] = createParser(format);
     }
 
@@ -123,9 +143,9 @@ angular.module('ui.bootstrap.dateparser', [])
         map = parser.map,
         results = input.match(regex);
 
-    if ( results && results.length ) {
+    if (results && results.length) {
       var fields, dt;
-      if (baseDate) {
+      if (angular.isDate(baseDate) && !isNaN(baseDate.getTime())) {
         fields = {
           year: baseDate.getFullYear(),
           month: baseDate.getMonth(),
@@ -136,18 +156,22 @@ angular.module('ui.bootstrap.dateparser', [])
           milliseconds: baseDate.getMilliseconds()
         };
       } else {
+        if (baseDate) {
+          $log.warn('dateparser:', 'baseDate is not a valid date');
+        }
         fields = { year: 1900, month: 0, date: 1, hours: 0, minutes: 0, seconds: 0, milliseconds: 0 };
       }
 
-      for( var i = 1, n = results.length; i < n; i++ ) {
+      for (var i = 1, n = results.length; i < n; i++) {
         var mapper = map[i-1];
-        if ( mapper.apply ) {
+        if (mapper.apply) {
           mapper.apply.call(fields, results[i]);
         }
       }
 
-      if ( isValid(fields.year, fields.month, fields.date) ) {
-        dt = new Date(fields.year, fields.month, fields.date, fields.hours, fields.minutes, fields.seconds,
+      if (isValid(fields.year, fields.month, fields.date)) {
+        dt = new Date(fields.year, fields.month, fields.date,
+          fields.hours, fields.minutes, fields.seconds,
           fields.milliseconds || 0);
       }
 
@@ -162,12 +186,12 @@ angular.module('ui.bootstrap.dateparser', [])
       return false;
     }
 
-    if ( month === 1 && date > 28) {
-        return date === 29 && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0);
+    if (month === 1 && date > 28) {
+      return date === 29 && ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0);
     }
 
-    if ( month === 3 || month === 5 || month === 8 || month === 10) {
-        return date < 31;
+    if (month === 3 || month === 5 || month === 8 || month === 10) {
+      return date < 31;
     }
 
     return true;

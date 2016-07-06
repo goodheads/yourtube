@@ -6,11 +6,11 @@ There are three versions of the tooltip: `tooltip`, `tooltip-template`, and
 
 - `tooltip` takes text only and will escape any HTML provided.
 - `tooltip-template` takes text that specifies the location of a template to
-  use for the tooltip.
-- `tooltip-html-unsafe` takes
-  whatever HTML is provided and displays it in a tooltip; it's called "unsafe"
-  because the HTML is not sanitized. *The user is responsible for ensuring the
+  use for the tooltip. Note that this needs to be wrapped in a tag.
+- `tooltip-html` takes
+  whatever HTML is provided and displays it in a tooltip; *The user is responsible for ensuring the
   content is safe to put into the DOM!*
+- `tooltip-html-unsafe` -- deprecated in favour of `tooltip-html`
 
 The tooltip directives provide several optional attributes to control how they
 will display:
@@ -20,13 +20,16 @@ will display:
 - `tooltip-animation`: Should it fade in and out? Defaults to "true".
 - `tooltip-popup-delay`: For how long should the user have to have the mouse
   over the element before the tooltip shows (in milliseconds)? Defaults to 0.
-- `tooltip-trigger`: What should trigger a show of the tooltip?
+- `tooltip-trigger`: What should trigger a show of the tooltip? Supports a space separated list of event names.
   Note: this attribute is no longer observable. See `tooltip-enable`.
 - `tooltip-enable`: Is it enabled? It will enable or disable the configured
   `tooltip-trigger`.
 - `tooltip-append-to-body`: Should the tooltip be appended to `$body` instead of
   the parent element?
 - `tooltip-class`: Custom class to be applied to the tooltip.
+- `tooltip-is-open` <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: false)_:
+  Whether to show the tooltip.
 
 The tooltip directives require the `$position` service.
 
@@ -38,9 +41,11 @@ provided hide triggers:
 - `mouseenter`: `mouseleave`
 - `click`: `click`
 - `focus`: `blur`
+- `none`: ``
 
 For any non-supported value, the trigger will be used to both show and hide the
-tooltip.
+tooltip. Using the 'none' trigger will disable the internal trigger(s), one can
+then use the `tooltip-is-open` attribute exclusively to show and hide the tooltip.
 
 **$tooltipProvider**
 
@@ -48,9 +53,9 @@ Through the `$tooltipProvider`, you can change the way tooltips and popovers
 behave by default; the attributes above always take precedence. The following
 methods are available:
 
-- `setTriggers( obj )`: Extends the default trigger mappings mentioned above
+- `setTriggers(obj)`: Extends the default trigger mappings mentioned above
   with mappings of your own. E.g. `{ 'openTrigger': 'closeTrigger' }`.
-- `options( obj )`: Provide a set of defaults for certain tooltip and popover
+- `options(obj)`: Provide a set of defaults for certain tooltip and popover
   attributes. Currently supports 'placement', 'animation', 'popupDelay', and
   `appendToBody`. Here are the defaults:
 

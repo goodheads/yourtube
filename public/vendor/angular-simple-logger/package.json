@@ -1,0 +1,49 @@
+{
+  "name": "angular-simple-logger",
+  "version": "0.0.4",
+  "description": "Basic logger with level logging which can also be independent.",
+  "main": "./dist/angular-simple-logger.js",
+  "scripts": {
+    "start": "gulp",
+    "test": "gulp spec"
+  },
+  "homepage": "https://github.com/nmccready/angular-simple-logger",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nmccready/angular-simple-logger.git"
+  },
+  "author": "Nicholas McCready",
+  "license": "MIT",
+  "dependencies": {
+    "angular": "^1.2"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.2",
+    "chai": "^3.2.0",
+    "coffee-script": "^1.9.3",
+    "del": "^2.0.0",
+    "gulp": "git://github.com/gulpjs/gulp.git#bbe3c56138a9ede627879d7e47daffd0a6d9b6db",
+    "gulp-coffee": "^2.3.1",
+    "gulp-coffeelint": "^0.5.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-debug": "^2.1.0",
+    "gulp-if": "^1.2.5",
+    "gulp-insert": "^0.5.0",
+    "gulp-open": "^1.0.0",
+    "gulp-replace": "^0.5.4",
+    "gulp-task-listing": "^1.0.1",
+    "gulp-uglify": "^1.4.1",
+    "gulp-util": "^3.0.6",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.9",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-coffee-preprocessor": "^0.3.0",
+    "karma-coverage": "^0.5.1",
+    "karma-jasmine": "^0.3.6",
+    "karma-mocha-reporter": "^1.1.1",
+    "karma-phantomjs-launcher": "^0.2.1",
+    "mocha": "^2.3.0",
+    "phantomjs": "^1.9.18",
+    "require-directory": "^2.1.1"
+  }
+}

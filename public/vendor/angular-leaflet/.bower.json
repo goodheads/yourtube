@@ -2,7 +2,7 @@
   "name": "angular-leaflet-directive",
   "author": "https://github.com/tombatossals/angular-leaflet-directive/graphs/contributors",
   "description": "angular-leaflet-directive - An AngularJS directive to easily interact with Leaflet maps",
-  "version": "0.8.2",
+  "version": "0.8.8",
   "homepage": "http://tombatossals.github.io/angular-leaflet-directive/",
   "keywords": [
     "angularjs",
@@ -14,18 +14,18 @@
     "dist/angular-leaflet-directive.js"
   ],
   "dependencies": {
-    "angular": "1.3.x",
-    "leaflet": "0.7.x",
-    "font-awesome": "~4.3.x"
+    "angular": "1.x",
+    "angular-simple-logger": "~0.0.1",
+    "leaflet": "0.7.x"
   },
   "devDependencies": {
     "jquery": "*",
     "semantic-ui": "*",
     "bootstrap": "*",
     "prism": "*",
-    "angular-route": "1.3.x",
-    "angular-animate": "1.3.x",
-    "angular-mocks": "1.3.x",
+    "angular-route": "1.x",
+    "angular-animate": "1.x",
+    "angular-mocks": "1.x",
     "leaflet.markercluster": "*",
     "leaflet.draw": "*",
     "Leaflet.label": "*",
@@ -36,18 +36,18 @@
     "leaflet-plugins": "*",
     "esri-leaflet": "*",
     "proj4": "*",
+    "font-awesome": "~4.3.x",
     "proj4leaflet": "*",
     "Leaflet.MakiMarkers": "*",
     "Leaflet.heat": "https://github.com/Leaflet/Leaflet.heat/archive/gh-pages.tar.gz",
     "Leaflet.ExtraMarkers": "https://github.com/coryasilva/Leaflet.ExtraMarkers/archive/v1.0.1.tar.gz",
     "Leaflet.fullscreen": "http://github.com/Leaflet/Leaflet.fullscreen/archive/v0.0.4.tar.gz",
     "Leaflet.PolylineDecorator": "bbecquet/Leaflet.PolylineDecorator",
-    "ionrangeslider": "~1.9.3"
-  },
-  "overrides": {
-    "Leaflet.utfgrid": {
-      "main": "dist/leaflet.utfgrid.js"
-    }
+    "ionrangeslider": "~1.9.3",
+    "leaflet-minimap": "~2.2.0",
+    "esri-leaflet-clustered-feature-layer": "~1.0.x",
+    "esri-leaflet-heatmap-feature-layer": "~1.0.x",
+    "leaflet-search": "~1.5.8"
   },
   "ignore": [
     "**/.*",
@@ -60,14 +60,13 @@
     "package.json",
     "bower.json"
   ],
-  "_release": "0.8.2",
+  "_release": "0.8.8",
   "_resolution": {
     "type": "version",
-    "tag": "v0.8.2",
-    "commit": "77b33f7af9c0b7b653a6bf84ae725bb7e8c899f0"
+    "tag": "v0.8.8",
+    "commit": "4c6b0cb8e3cc64496a4d2faa3adc8b8adf25f78d"
   },
-  "_source": "git://github.com/tombatossals/angular-leaflet-directive.git",
+  "_source": "https://github.com/tombatossals/angular-leaflet-directive.git",
   "_target": "~0.8.2",
-  "_originalSource": "angular-leaflet",
-  "_direct": true
+  "_originalSource": "angular-leaflet"
 }

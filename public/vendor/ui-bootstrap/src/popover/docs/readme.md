@@ -8,8 +8,10 @@ There are two versions of the popover: `popover` and `popover-template`:
 
 - `popover` takes text only and will escape any HTML provided for the popover
   body.
+- `popover-html` takes an expression that evaluates to an html string. *The user is responsible for ensuring the
+  content is safe to put into the DOM!*
 - `popover-template` takes text that specifies the location of a template to
-  use for the popover body.
+  use for the popover body. Note that this needs to be wrapped in a tag.
 
 The popover directives provides several optional attributes to control how it
 will display:
@@ -24,6 +26,9 @@ will display:
   `tooltip` directive for supported values.
 - `popover-append-to-body`: Should the tooltip be appended to `$body` instead of
   the parent element?
+- `popover-is-open` <i class="glyphicon glyphicon-eye-open"></i>
+  _(Default: false)_:
+  Whether to show the popover.
 
 The popover directives require the `$position` service.
 

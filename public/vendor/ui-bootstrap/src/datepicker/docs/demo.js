@@ -17,12 +17,10 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
     $scope.minDate = $scope.minDate ? null : new Date();
   };
   $scope.toggleMin();
+  $scope.maxDate = new Date(2020, 5, 22);
 
   $scope.open = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-
-    $scope.opened = true;
+    $scope.status.opened = true;
   };
 
   $scope.dateOptions = {
@@ -32,6 +30,10 @@ angular.module('ui.bootstrap.demo').controller('DatepickerDemoCtrl', function ($
 
   $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
   $scope.format = $scope.formats[0];
+
+  $scope.status = {
+    opened: false
+  };
 
   var tomorrow = new Date();
   tomorrow.setDate(tomorrow.getDate() + 1);

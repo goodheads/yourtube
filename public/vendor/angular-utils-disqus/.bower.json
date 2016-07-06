@@ -32,8 +32,7 @@
     "tag": "v0.3.0",
     "commit": "1ff1800262e11c95d25e3eda30af4a0440681262"
   },
-  "_source": "git://github.com/michaelbromley/angularUtils-disqus.git",
+  "_source": "https://github.com/michaelbromley/angularUtils-disqus.git",
   "_target": "~0.3.0",
-  "_originalSource": "angular-utils-disqus",
-  "_direct": true
+  "_originalSource": "angular-utils-disqus"
 }

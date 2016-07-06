@@ -1,13 +1,17 @@
 describe('dropdownToggle', function() {
-  var $compile, $rootScope, $document, dropdownConfig, element;
+  var $animate, $compile, $rootScope, $document, $templateCache, dropdownConfig, element, $browser;
 
+  beforeEach(module('ngAnimateMock'));
   beforeEach(module('ui.bootstrap.dropdown'));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _dropdownConfig_) {
+  beforeEach(inject(function(_$animate_, _$compile_, _$rootScope_, _$document_, _$templateCache_, _dropdownConfig_, _$browser_) {
+    $animate = _$animate_;
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $document = _$document_;
+    $templateCache = _$templateCache_;
     dropdownConfig = _dropdownConfig_;
+    $browser = _$browser_;
   }));
 
   afterEach(function() {
@@ -171,15 +175,39 @@ describe('dropdownToggle', function() {
     });
 
     // pr/issue 3274
-    it('should not raise $digest:inprog if dismissed during a digest cycle', function () {
+    it('should not raise $digest:inprog if dismissed during a digest cycle', function() {
       clickDropdownToggle();
       expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
 
-      $rootScope.$apply(function () {
+      $rootScope.$apply(function() {
         $document.click();
       });
 
       expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+    });
+  });
+
+  describe('using dropdownMenuTemplate', function() {
+    function dropdown() {
+      $templateCache.put('custom.html', '<ul class="dropdown-menu"><li>Item 1</li></ul>');
+
+      return $compile('<li dropdown><a href dropdown-toggle></a><ul class="dropdown-menu" template-url="custom.html"></ul></li>')($rootScope);
+    }
+
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should apply custom template for dropdown menu', function() {
+      element.find('a').click();
+      expect(element.find('ul.dropdown-menu').eq(0).find('li').eq(0).text()).toEqual('Item 1');
+    });
+
+    it('should clear ul when dropdown menu is closed', function() {
+      element.find('a').click();
+      expect(element.find('ul.dropdown-menu').eq(0).find('li').eq(0).text()).toEqual('Item 1');
+      element.find('a').click();
+      expect(element.find('ul.dropdown-menu').eq(0).find('li').length).toEqual(0);
     });
   });
 
@@ -196,10 +224,28 @@ describe('dropdownToggle', function() {
       expect($document.find('#dropdown-menu').parent()[0]).toBe($document.find('body')[0]);
     });
 
+    it('adds the dropdown class to the body', function() {
+      expect($document.find('body').hasClass('dropdown')).toBe(true);
+    });
+
     it('removes the menu when the dropdown is removed', function() {
       element.remove();
       $rootScope.$digest();
       expect($document.find('#dropdown-menu').length).toEqual(0);
+    });
+
+    it('toggles the open class on body', function() {
+      var body = $document.find('body');
+
+      expect(body.hasClass('open')).toBe(false);
+
+      element.find('[dropdown-toggle]').click();
+
+      expect(body.hasClass('open')).toBe(true);
+
+      element.find('[dropdown-toggle]').click();
+
+      expect(body.hasClass('open')).toBe(false);
     });
   });
 
@@ -207,7 +253,7 @@ describe('dropdownToggle', function() {
     function dropdown() {
 
       // Simulate URL rewriting behavior
-      $document.on('click', 'a[href="#something"]', function () {
+      $document.on('click', 'a[href="#something"]', function() {
         $rootScope.$broadcast('$locationChangeSuccess');
         $rootScope.$apply();
       });
@@ -297,9 +343,14 @@ describe('dropdownToggle', function() {
     it('should call it correctly when toggles', function() {
       $rootScope.isopen = true;
       $rootScope.$digest();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
 
       clickDropdownToggle();
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
     });
   });
@@ -319,9 +370,15 @@ describe('dropdownToggle', function() {
     it('should call it correctly when toggles', function() {
       $rootScope.isopen = false;
       $rootScope.$digest();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
 
       $rootScope.isopen = true;
+      $rootScope.$digest();
+
+      $animate.flush();
       $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
     });
@@ -340,9 +397,15 @@ describe('dropdownToggle', function() {
 
     it('should call it when clicked', function() {
       clickDropdownToggle();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
 
       clickDropdownToggle();
+
+      $animate.flush();
+      $rootScope.$digest();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
     });
   });
@@ -378,14 +441,27 @@ describe('dropdownToggle', function() {
       expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
     });
 
-    it('auto-close="outsideClick"', function() {
-      element = dropdown('outsideClick');
-      clickDropdownToggle();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
-      element.find('ul li a').click();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
-      $document.click();
-      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+    describe('outsideClick', function() {
+      it('should close only on a click outside of the dropdown menu', function() {
+        element = dropdown('outsideClick');
+        clickDropdownToggle();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        element.find('ul li a').click();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+        $document.click();
+        expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      });
+
+      it('should work with dropdown-append-to-body', function() {
+        element = $compile('<li dropdown dropdown-append-to-body auto-close="outsideClick"><a href dropdown-toggle></a><ul class="dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li></ul></li>')($rootScope);
+        clickDropdownToggle();
+        var body = $document.find('body');
+        expect(body.hasClass(dropdownConfig.openClass)).toBe(true);
+        $document.find('#dropdown-menu').find('li').eq(0).trigger('click');
+        expect(body.hasClass(dropdownConfig.openClass)).toBe(true);
+        $document.click();
+        expect(body.hasClass(dropdownConfig.openClass)).toBe(false);
+      });
     });
 
     it('control with is-open', function() {
@@ -431,6 +507,200 @@ describe('dropdownToggle', function() {
       clickDropdownToggle(elm2);
       expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
       expect(elm2.hasClass(dropdownConfig.openClass)).toBe(true);
+    });
+
+    it('should not close on $locationChangeSuccess if auto-close="disabled"', function() {
+      var elm1 = dropdown('disabled');
+      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(false);
+      clickDropdownToggle(elm1);
+      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
+      $rootScope.$broadcast('$locationChangeSuccess');
+      $rootScope.$digest();
+      expect(elm1.hasClass(dropdownConfig.openClass)).toBe(true);
+    });
+  });
+
+  describe('`keyboard-nav` option', function() {
+    function dropdown() {
+      return $compile('<li dropdown keyboard-nav><a href dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+    }
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should focus first list element when down arrow pressed', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var optionEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(optionEl)).toBe(true);
+    });
+
+    it('should not focus first list element when down arrow pressed if closed', function() {
+      $document.find('body').append(element);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(false);
+    });
+
+    it('should focus second list element when down arrow pressed twice', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+  });
+
+  describe('`keyboard-nav` option', function() {
+    function dropdown() {
+      return $compile('<li dropdown keyboard-nav><a href dropdown-toggle></a><ul><li><a href>Hello</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+    }
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should focus first list element when down arrow pressed', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should not focus first list element when up arrow pressed after dropdown toggled', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+
+      triggerKeyDown($document, 38);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(false);
+    });
+
+    it('should focus last list element when up arrow pressed after dropdown toggled', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 38);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should not focus any list element when down arrow pressed if closed', function() {
+      $document.find('body').append(element);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+      var focusEl = element.find('ul').eq(0).find('a');
+      expect(isFocused(focusEl[0])).toBe(false);
+      expect(isFocused(focusEl[1])).toBe(false);
+    });
+
+    it('should not change focus when other keys are pressed', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 37);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a');
+      expect(isFocused(focusEl[0])).toBe(false);
+      expect(isFocused(focusEl[1])).toBe(false);
+    });
+
+    it('should focus second list element when down arrow pressed twice', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should focus first list element when down arrow pressed 2x and up pressed 1x', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      triggerKeyDown($document, 38);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should stay focused on final list element if down pressed at list end', function() {
+      $document.find('body').append(element);
+      clickDropdownToggle();
+      triggerKeyDown($document, 40);
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
+
+      triggerKeyDown($document, 40);
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should close if esc is pressed while focused', function() {
+      element = dropdown('disabled');
+      $document.find('body').append(element);
+      clickDropdownToggle();
+
+      triggerKeyDown($document, 40);
+
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = element.find('ul').eq(0).find('a').eq(0);
+      expect(isFocused(focusEl)).toBe(true);
+
+      triggerKeyDown($document, 27);
+      expect(element.hasClass(dropdownConfig.openClass)).toBe(false);
+    });
+  });
+
+  describe('`keyboard-nav` option with `dropdown-append-to-body` option', function() {
+    function dropdown() {
+      return $compile('<li dropdown dropdown-append-to-body keyboard-nav><a href dropdown-toggle></a><ul class="dropdown-menu" id="dropdown-menu"><li><a href>Hello On Body</a></li><li><a href>Hello Again</a></li></ul></li>')($rootScope);
+    }
+
+    beforeEach(function() {
+      element = dropdown();
+    });
+
+    it('should focus first list element when down arrow pressed', function() {
+      clickDropdownToggle();
+
+      triggerKeyDown(element, 40);
+
+      expect($document.find('body').hasClass(dropdownConfig.openClass)).toBe(true);
+      var focusEl = $document.find('ul').eq(0).find('a');
+      expect(isFocused(focusEl)).toBe(true);
+    });
+
+    it('should focus second list element when down arrow pressed twice', function() {
+      clickDropdownToggle();
+      triggerKeyDown(element, 40);
+      triggerKeyDown(element, 40);
+
+      expect($document.find('body').hasClass(dropdownConfig.openClass)).toBe(true);
+      var elem1 = $document.find('ul');
+      var elem2 = elem1.find('a');
+      var focusEl = $document.find('ul').eq(0).find('a').eq(1);
+      expect(isFocused(focusEl)).toBe(true);
     });
   });
 });

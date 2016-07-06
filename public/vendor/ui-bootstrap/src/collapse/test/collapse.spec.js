@@ -1,5 +1,4 @@
-describe('collapse directive', function () {
-
+describe('collapse directive', function() {
   var scope, $compile, $animate;
   var element;
 
@@ -23,8 +22,6 @@ describe('collapse directive', function () {
   it('should be hidden on initialization if isCollapsed = true without transition', function() {
     scope.isCollapsed = true;
     scope.$digest();
-    $animate.triggerCallbacks();
-    //No animation timeout here
     expect(element.height()).toBe(0);
   });
 
@@ -33,14 +30,12 @@ describe('collapse directive', function () {
     scope.$digest();
     scope.isCollapsed = true;
     scope.$digest();
-    $animate.triggerCallbacks();
     expect(element.height()).toBe(0);
   });
 
   it('should be shown on initialization if isCollapsed = false without transition', function() {
     scope.isCollapsed = false;
     scope.$digest();
-    //No animation timeout here
     expect(element.height()).not.toBe(0);
   });
 
@@ -51,7 +46,6 @@ describe('collapse directive', function () {
     scope.$digest();
     scope.isCollapsed = false;
     scope.$digest();
-    $animate.triggerCallbacks();
     expect(element.height()).not.toBe(0);
   });
 
@@ -64,14 +58,30 @@ describe('collapse directive', function () {
     scope.$digest();
     scope.isCollapsed = true;
     scope.$digest();
-    $animate.triggerCallbacks();
-    expect(element.height()).toBe(0);
-    $animate.triggerCallbacks();
     expect(element.height()).toBe(0);
   });
 
-  describe('dynamic content', function() {
+  it('should change aria-expanded attribute', function() {
+    scope.isCollapsed = false;
+    scope.$digest();
+    expect(element.attr('aria-expanded')).toBe('true');
 
+    scope.isCollapsed = true;
+    scope.$digest();
+    expect(element.attr('aria-expanded')).toBe('false');
+  });
+
+  it('should change aria-hidden attribute', function() {
+    scope.isCollapsed = false;
+    scope.$digest();
+    expect(element.attr('aria-hidden')).toBe('false');
+
+    scope.isCollapsed = true;
+    scope.$digest();
+    expect(element.attr('aria-hidden')).toBe('true');
+  });
+
+  describe('dynamic content', function() {
     var element;
 
     beforeEach(function() {
@@ -88,23 +98,21 @@ describe('collapse directive', function () {
       scope.exp = false;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.triggerCallbacks();
       var collapseHeight = element.height();
       scope.exp = true;
       scope.$digest();
-      expect(element.height()).toBeGreaterThan(collapseHeight);
+      expect(element.height()).toBe(collapseHeight);
     });
 
     it('should shrink accordingly when content size inside collapse decreases', function() {
       scope.exp = true;
       scope.isCollapsed = false;
       scope.$digest();
-      $animate.triggerCallbacks();
+      $animate.flush();
       var collapseHeight = element.height();
       scope.exp = false;
       scope.$digest();
       expect(element.height()).toBeLessThan(collapseHeight);
     });
-
   });
 });

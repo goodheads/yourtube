@@ -13,6 +13,10 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
  	:
  	Current page number. First page is 1.
 
+ * `ng-disabled` <i class="glyphicon glyphicon-eye-open"></i>
+  :
+  Used to disable the pagination component
+
  * `total-items` <i class="glyphicon glyphicon-eye-open"></i>
  	:
  	Total number of items in all pages.
@@ -57,6 +61,10 @@ Settings can be provided as attributes in the `<pagination>` or globally configu
  	_(Default: 'Last')_ :
  	Text for Last button.
 
+ * `template-url`
+  _(Default: 'template/pagination/pagination.html')_ :
+  Override the template for the component with a custom provided template
+
 ### Pager Settings ###
 
 Settings can be provided as attributes in the `<pager>` or globally configured through the `pagerConfig`.  
@@ -73,3 +81,11 @@ For `ng-model`, `total-items`, `items-per-page` and `num-pages` see pagination s
  * `next-text`
  	_(Default: 'Next »')_ :
  	Text for Next button.
+
+ * `template-url`
+  _(Default: 'template/pagination/pager.html') :
+  Override the template for the component with a custom provided template
+
+ * `ng-disabled` <i class="glyphicon glyphicon-eye-open"></i>
+  :
+  Used to disable the pager component

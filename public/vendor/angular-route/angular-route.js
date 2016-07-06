@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.4.0
+ * @license AngularJS v1.4.12
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -206,9 +206,9 @@ function $RouteProvider() {
 
     path = path
       .replace(/([().])/g, '\\$1')
-      .replace(/(\/)?:(\w+)([\?\*])?/g, function(_, slash, key, option) {
-        var optional = option === '?' ? option : null;
-        var star = option === '*' ? option : null;
+      .replace(/(\/)?:(\w+)(\*\?|[\?\*])?/g, function(_, slash, key, option) {
+        var optional = (option === '?' || option === '*?') ? '?' : null;
+        var star = (option === '*' || option === '*?') ? '*' : null;
         keys.push({ name: key, optional: !!optional });
         slash = slash || '';
         return ''
@@ -412,7 +412,9 @@ function $RouteProvider() {
      * @name $route#$routeChangeSuccess
      * @eventType broadcast on root scope
      * @description
-     * Broadcasted after a route dependencies are resolved.
+     * Broadcasted after a route change has happened successfully.
+     * The `resolve` dependencies are now available in the `current.locals` property.
+     *
      * {@link ngRoute.directive:ngView ngView} listens for the directive
      * to instantiate the controller and render the view.
      *
@@ -466,10 +468,18 @@ function $RouteProvider() {
            */
           reload: function() {
             forceReload = true;
+
+            var fakeLocationEvent = {
+              defaultPrevented: false,
+              preventDefault: function fakePreventDefault() {
+                this.defaultPrevented = true;
+                forceReload = false;
+              }
+            };
+
             $rootScope.$evalAsync(function() {
-              // Don't support cancellation of a reload for now...
-              prepareRoute();
-              commitRoute();
+              prepareRoute(fakeLocationEvent);
+              if (!fakeLocationEvent.defaultPrevented) commitRoute();
             });
           },
 
@@ -596,9 +606,8 @@ function $RouteProvider() {
                 if (angular.isFunction(templateUrl)) {
                   templateUrl = templateUrl(nextRoute.params);
                 }
-                templateUrl = $sce.getTrustedResourceUrl(templateUrl);
                 if (angular.isDefined(templateUrl)) {
-                  nextRoute.loadedTemplateUrl = templateUrl;
+                  nextRoute.loadedTemplateUrl = $sce.valueOf(templateUrl);
                   template = $templateRequest(templateUrl);
                 }
               }
@@ -795,7 +804,6 @@ ngRouteModule.directive('ngView', ngViewFillContentFactory);
         }
 
         .view-animate.ng-enter, .view-animate.ng-leave {
-          -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
           transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 1.5s;
 
           display:block;

@@ -1,0 +1,48 @@
+{
+  "camel_case_classes": {
+    "level": "error"
+  },
+  "max_line_length": {
+    "value": 125,
+    "level": "ignore",
+    "limitComments": false
+  },
+  "no_backticks": {
+    "level": "ignore"
+  },
+  "no_debugger": {
+    "level": "warn"
+  },
+  "no_plusplus": {
+    "level": "error"
+  },
+  "no_stand_alone_at": {
+    "level": "ignore"
+  },
+  "no_tabs": {
+    "level": "error"
+  },
+  "no_throwing_strings": {
+    "level": "ignore"
+  },
+  "no_trailing_semicolons": {
+    "level": "error"
+  },
+  "no_trailing_whitespace": {
+    "level": "error",
+    "allowed_in_comments": true,
+    "allowed_in_empty_lines": true
+  },
+  "no_unnecessary_double_quotes": {
+    "level": "error"
+  },
+  "no_unnecessary_fat_arrows": {
+    "level": "error"
+  },
+  "non_empty_constructor_needs_parens": {
+    "level": "ignore"
+  },
+  "no_interpolation_in_single_quotes":{
+    "level": "error"
+  }
+}

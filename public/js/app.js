@@ -13,7 +13,6 @@ var app = angular
               'ngFileUpload',
               'toastr',
               'ngLodash',
-              'hc.marked',
               'angularUtils.directives.dirDisqus',
               'satellizer'])
   .config(['cfpLoadingBarProvider','$authProvider', 'cloudinaryProvider','$httpProvider', function(cfpLoadingBarProvider, $authProvider, cloudinaryProvider, $httpProvider) {

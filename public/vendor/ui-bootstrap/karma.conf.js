@@ -18,6 +18,7 @@ module.exports = function(config) {
       'misc/test-lib/jquery-1.8.2.min.js',
       'node_modules/angular/angular.js',
       'node_modules/angular-mocks/angular-mocks.js',
+      'node_modules/angular-sanitize/angular-sanitize.js',
       'misc/test-lib/helpers.js',
       'src/**/*.js',
       'template/**/*.js'
@@ -57,7 +58,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // start these browsers

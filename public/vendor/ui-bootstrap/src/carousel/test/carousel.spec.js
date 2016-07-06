@@ -14,12 +14,13 @@ describe('carousel', function() {
   }));
   beforeEach(module('template/carousel/carousel.html', 'template/carousel/slide.html'));
 
-  var $rootScope, $compile, $controller, $interval;
-  beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$interval_) {
+  var $rootScope, $compile, $controller, $interval, $templateCache;
+  beforeEach(inject(function(_$rootScope_, _$compile_, _$controller_, _$interval_, _$templateCache_) {
     $rootScope = _$rootScope_;
     $compile = _$compile_;
     $controller = _$controller_;
     $interval = _$interval_;
+    $templateCache = _$templateCache_;
   }));
 
   describe('basics', function() {
@@ -53,6 +54,29 @@ describe('carousel', function() {
       }
     }
 
+    it('should allow overriding of the carousel template', function() {
+      $templateCache.put('foo/bar.html', '<div>foo</div>');
+
+      elm = $compile('<carousel template-url="foo/bar.html"></carousel>')(scope);
+      $rootScope.$digest();
+
+      expect(elm.html()).toBe('foo');
+    });
+
+    it('should allow overriding of the slide template', function() {
+      $templateCache.put('foo/bar.html', '<div class="slide">bar</div>');
+
+      elm = $compile(
+        '<carousel interval="interval" no-transition="true" no-pause="nopause">' +
+          '<slide template-url="foo/bar.html"></slide>' + 
+        '</carousel>'
+      )(scope);
+      $rootScope.$digest();
+
+      var slide = elm.find('.slide');
+      expect(slide.html()).toBe('bar');
+    });
+
     it('should set the selected slide to active = true', function() {
       expect(scope.slides[0].content).toBe('one');
       testSlideActive(0);
@@ -71,6 +95,51 @@ describe('carousel', function() {
     it('should display clickable slide indicators', function () {
       var indicators = elm.find('ol.carousel-indicators > li');
       expect(indicators.length).toBe(3);
+    });
+
+    it('should stop cycling slides forward when noWrap is truthy', function () {
+      elm = $compile(
+          '<carousel interval="interval" no-wrap="noWrap">' +
+            '<slide ng-repeat="slide in slides" active="slide.active">' +
+              '{{slide.content}}' +
+            '</slide>' +
+          '</carousel>'
+        )(scope);
+
+      scope.noWrap = true;
+      scope.$apply();
+
+      scope = elm.isolateScope();
+      spyOn(scope, 'pause');
+
+      for (var i = 0; i < scope.slides.length - 1; ++i) {
+        scope.next();
+      }
+      testSlideActive(scope.slides.length - 1);
+      scope.next();
+      testSlideActive(scope.slides.length - 1);
+      expect(scope.pause).toHaveBeenCalled();
+    });
+
+    it('should stop cycling slides backward when noWrap is truthy', function () {
+      elm = $compile(
+          '<carousel interval="interval" no-wrap="noWrap">' +
+            '<slide ng-repeat="slide in slides" active="slide.active">' +
+              '{{slide.content}}' +
+            '</slide>' +
+          '</carousel>'
+        )(scope);
+
+      scope.noWrap = true;
+      scope.$apply();
+
+      scope = elm.isolateScope();
+      spyOn(scope, 'pause');
+
+      testSlideActive(0);
+      scope.prev();
+      testSlideActive(0);
+      expect(scope.pause).toHaveBeenCalled();
     });
 
     it('should hide navigation when only one slide', function () {
@@ -146,7 +215,7 @@ describe('carousel', function() {
       testSlideActive(1);
     });
 
-    it('shouldnt go forward if interval is NaN or negative', function() {
+    it('shouldnt go forward if interval is NaN or negative or has no slides', function() {
       testSlideActive(0);
       var previousInterval = scope.interval;
       scope.$apply('interval = -1');
@@ -159,6 +228,9 @@ describe('carousel', function() {
       $interval.flush(1000);
       testSlideActive(1);
       scope.$apply('interval = 1000');
+      $interval.flush(1000);
+      testSlideActive(2);
+      scope.$apply('slides = []');
       $interval.flush(1000);
       testSlideActive(2);
     });
@@ -346,7 +418,7 @@ describe('carousel', function() {
 
     beforeEach(function() {
       scope = $rootScope.$new();
-      ctrl = $controller('CarouselController', {$scope: scope, $element: null});
+      ctrl = $controller('CarouselController', {$scope: scope, $element: angular.element('<div></div>')});
       for(var i = 0;i < slides.length;i++){
         ctrl.addSlide(slides[i]);
       }
@@ -409,5 +481,45 @@ describe('carousel', function() {
         expect(scope.next.calls.count()).toBe(1);
       });
     });
+
+    it('should be exposed in the template', inject(function($templateCache) {
+      $templateCache.put('template/carousel/carousel.html', '<div>{{carousel.text}}</div>');
+
+      var scope = $rootScope.$new();
+      var elm = $compile('<carousel interval="bar" no-transition="false" no-pause="true"></carousel>')(scope);
+      $rootScope.$digest();
+
+      var ctrl = elm.controller('carousel');
+
+      expect(ctrl).toBeDefined();
+
+      ctrl.text = 'foo';
+      $rootScope.$digest();
+
+      expect(elm.html()).toBe('foo');
+    }));
+  });
+
+  it('should expose a custom model in the carousel slide', function() {
+    var scope = $rootScope.$new();
+    scope.slides = [
+      {active:false,content:'one'},
+      {active:false,content:'two'},
+      {active:false,content:'three'}
+    ];
+    var elm = $compile(
+      '<carousel interval="interval" no-transition="true" no-pause="nopause">' +
+        '<slide ng-repeat="slide in slides" active="slide.active" actual="slide">' +
+          '{{slide.content}}' +
+        '</slide>' +
+      '</carousel>'
+    )(scope);
+    $rootScope.$digest();
+
+    var ctrl = elm.controller('carousel');
+
+    expect(angular.equals(ctrl.slides.map(function(slide) {
+      return slide.actual;
+    }), scope.slides)).toBe(true);
   });
 });

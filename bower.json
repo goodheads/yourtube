@@ -52,7 +52,7 @@
     "cloudinary_ng": "^1.0.0"
   },
   "resolutions": {
-    "angular": "1.4.3",
+    "angular": "1.4.12",
     "satellizer": "^0.14.1",
     "ng-file-upload": "^12.0.4"
   }
