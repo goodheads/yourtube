@@ -49,7 +49,10 @@
     "satellizer": "^0.14.1",
     "angular-cookies": "~1.4.3",
     "ng-file-upload": "^12.0.4",
-    "cloudinary_ng": "^1.0.0"
+    "cloudinary_ng": "^1.0.0",
+    "ng-dialog": "^0.6.2",
+    "angular-confirm-modal": "^1.2.5",
+    "angular-bootstrap-confirm": "^2.3.0"
   },
   "resolutions": {
     "angular": "1.4.12",

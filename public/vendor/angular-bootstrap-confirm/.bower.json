@@ -1,0 +1,43 @@
+{
+  "name": "angular-bootstrap-confirm",
+  "version": "2.3.0",
+  "homepage": "https://github.com/mattlewis92/angular-bootstrap-confirm",
+  "authors": [
+    "Matt Lewis"
+  ],
+  "description": "Displays a bootstrap confirmation popover when clicking the given element.",
+  "main": "dist/angular-bootstrap-confirm.js",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "angular",
+    "bootstrap",
+    "popover",
+    "confirm"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "src/angular-bootstrap-confirm.js"
+  ],
+  "dependencies": {
+    "angular": ">=1.3.0",
+    "bootstrap": "^3.3.5",
+    "angular-sanitize": ">=1.3.0"
+  },
+  "_release": "2.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "2.3.0",
+    "commit": "58dcbd95c615f135c8e65e07836bdeb0f92616b7"
+  },
+  "_source": "https://github.com/mattlewis92/angular-bootstrap-confirm.git",
+  "_target": "^2.3.0",
+  "_originalSource": "angular-bootstrap-confirm",
+  "_direct": true
+}

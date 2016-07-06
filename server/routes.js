@@ -15,6 +15,7 @@ module.exports = function(app) {
   app.put('/api/video/:public_id', token.ensureAuthenticated, Video.updateVideoDetails);
   app.get('/api/videos', token.ensureAuthenticated, Video.retrieveAll);
   app.get('/api/video/:public_id', token.ensureAuthenticated, Video.retrieveEachVideoDetails);
+  app.delete('/api/video/:public_id', token.ensureAuthenticated, Video.deleteVideo);
 
   app.get('/api/me', token.ensureAuthenticated, User.getLoggedInUserDetail);
   app.put('/api/me', token.ensureAuthenticated, User.updateLoggedInUserDetail);

@@ -1,0 +1,50 @@
+{
+  "name": "ng-dialog",
+  "homepage": "https://github.com/likeastore/ngDialog",
+  "description": "Modal dialogs and popups provider for Angular.js applications",
+  "main": [
+    "js/ngDialog.js",
+    "css/ngDialog.css",
+    "css/ngDialog-theme-default.css"
+  ],
+  "keywords": [
+    "angular.js",
+    "modals",
+    "popups",
+    "dialog",
+    "ng",
+    "provider",
+    "factory",
+    "directive"
+  ],
+  "authors": [
+    "Dmitri Voronianski"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "example",
+    "css/myth",
+    "Gruntfile.js"
+  ],
+  "dependencies": {
+    "angular": "~1.5"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.5"
+  },
+  "version": "0.6.2",
+  "_release": "0.6.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.6.2",
+    "commit": "862aa990f0f81112f6efcc5e5fc10a141b165fc4"
+  },
+  "_source": "https://github.com/likeastore/ngDialog.git",
+  "_target": "^0.6.2",
+  "_originalSource": "ng-dialog"
+}

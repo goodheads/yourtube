@@ -63,6 +63,29 @@ module.exports = {
   },
 
   /**
+   * Delete A Video
+   * @param  req
+   * @param  res
+   * @param  next
+   * @return Void
+   */
+  deleteVideo: function(req, res){
+    var publicId = req.params.public_id;
+
+    Upload.deleteVideo(req,res);
+
+    Video.remove({public_id: publicId}, function (err, user) {
+      if(err) {
+        return res.status(404).json({success: false, message: err.message });
+      }
+
+      return res.json({success: true, message: 'Video Deleted Successfully'});
+    });
+
+  },
+
+
+  /**
    * Fetch Each Video Details
    * @param   req
    * @param   res
@@ -86,9 +109,8 @@ module.exports = {
     var videoDetails = req.body;
 
     Upload.tagVideos(req, res);
-
-    console.log("Format", req.body.format);
-    console.log("Audio", req.body.audio);
+    var resizeVideoUrl = Upload.resizeVideo(req, res);
+    var trimVideoUrl = Upload.trimVideo(req, res);
 
     if(req.body.audio) {
       var newVideoUrl = Upload.removeAudio(req, res);
@@ -103,7 +125,14 @@ module.exports = {
       if(err) {
         return res.status(404).json({success: false, message: 'User Details Not Found', err: err});
       } else {
-        return res.status(200).json({success: true, message: 'Update Successful', audioUrl: newVideoUrl, colorVideoUrl: coloredVideoUrl });
+        return res.status(200).json({
+          success: true,
+          message: 'Update Successful',
+          audioUrl: newVideoUrl,
+          colorVideoUrl: coloredVideoUrl,
+          resizeVideoUrl: resizeVideoUrl,
+          trimVideoUrl: trimVideoUrl
+        });
       }
     });
   }

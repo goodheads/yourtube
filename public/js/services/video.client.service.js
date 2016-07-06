@@ -38,6 +38,17 @@ app.factory('Video', ['$http', function($http) {
       });
     },
 
+    deleteVideo: function(id, cb){
+      $http.delete('/api/video/' + id).then( function(response){
+        if(response.data.success){
+          cb(true, response.data);
+        }
+        else {
+          cb(false, response.data);
+        }
+      });
+    },
+
     updateVideoDetails: function(id, video, cb){
       $http.put('/api/video/' + id, video).then( function(response){
         if(response.data.success){

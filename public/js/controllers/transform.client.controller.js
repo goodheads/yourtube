@@ -15,6 +15,8 @@ app.controller('TransformController', ['$scope','$localStorage','$routeParams','
       format: $scope.videoDetails.format,
       width: $scope.videoDetails.width,
       height: $scope.videoDetails.height,
+      startOffset: $scope.videoDetails.startOffset,
+      duration: $scope.videoDetails.duration,
       videoBackground: $scope.videoDetails.backgroundColor,
       url: $scope.videoDetails.url
     };
@@ -24,6 +26,8 @@ app.controller('TransformController', ['$scope','$localStorage','$routeParams','
         toastr.success(data.message, { timeOut: 7000 });
         $scope.videoDetails.preview = data.audioUrl;
         $scope.videoDetails.colorPreview = data.colorVideoUrl;
+        $scope.videoDetails.resizedVideo = data.resizeVideoUrl;
+        $scope.videoDetails.trimmedVideo = data.trimVideoUrl;
       } else {
         toastr.error( data.message, 'Error', { timeOut: 2000 });
       }

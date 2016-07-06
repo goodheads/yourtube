@@ -1,4 +1,5 @@
-<div class="container">
+<div class="container"
+  ng-init="vm = {title: 'Are you sure?', message: 'Are you really <b>sure</b> you want to do this?', confirmText: 'Yes <i class=\'glyphicon glyphicon-ok\'></i>', cancelText: 'No <i class=\'glyphicon glyphicon-remove\'></i>'}">
   <div class="panel panel-default">
     <div class="panel-heading">MY UPLOADED VIDEOS</div>
     <div class="panel-body">
@@ -18,6 +19,21 @@
             </div>
             <p> {{ videos.description }}</p>
             <a href="/my_videos/{{ videos.public_id }}" class="btn" /> Edit </a>
+            <button
+              class="btn btn-danger"
+              mwl-confirm
+              title="{{ vm.title }}"
+              message="{{ vm.message }}"
+              confirm-text="{{ vm.confirmText }}"
+              cancel-text="{{ vm.cancelText }}"
+              placement="{{ placement }}"
+              on-confirm="deleteVideo(videos.public_id)"
+              on-cancel="vm.cancelClicked = true"
+              confirm-button-type="danger"
+              cancel-button-type="default"
+              >
+              Delete
+            </button>
           </div>
 
       </div>
