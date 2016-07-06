@@ -68,6 +68,8 @@
   <script src="js/controllers/home.client.controller.js"></script>
   <script src="js/controllers/upload.client.controller.js"></script>
   <script src="js/controllers/nav.client.controller.js"></script>
+  <script src="js/controllers/video.client.controller.js"></script>
+  <script src="js/controllers/transform.client.controller.js"></script>
   <script src="js/controllers/logout.client.controller.js"></script>
   <script src="js/services/user.client.service.js"></script>
   <script src="js/services/video.client.service.js"></script>
@@ -83,6 +85,7 @@
     <ul class="nav navbar-nav">
       <li ng-if="isAuthenticated()"><a href="/account">Profile</a></li>
       <li ng-if="isAuthenticated()"><a href="/upload">Upload</a></li>
+      <li ng-if="isAuthenticated()"><a href="/my_videos">My Videos</a></li>
       <li><a href="/page/about">About</a></li>
     </ul>
     <ul ng-if="!isAuthenticated()" class="nav navbar-nav pull-right">

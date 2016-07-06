@@ -1,7 +1,7 @@
-app.controller('UploadController', ['$scope', '$rootScope', '$location', 'toastr', 'Upload', 'Video', '$http',
+app.controller('UploadController', ['$scope', '$localStorage', 'toastr', 'Upload', 'Video',
 
   /* Uploading with Angular File Upload */
-  function($scope, $rootScope, $location, toastr, Upload, Video, $http) {
+  function($scope, $localStorage, toastr, Upload, Video) {
 
     $scope.uploadFiles = function(files){
       $scope.files = files;
@@ -29,7 +29,10 @@ app.controller('UploadController', ['$scope', '$rootScope', '$location', 'toastr
               description: $scope.video === undefined ? 'Default description' : $scope.video.description,
               url: data.response.secure_url,
               duration: data.response.duration,
-              format: data.response.format
+              format: data.response.format,
+              width: data.response.width,
+              height: data.response.height,
+              uploaded_by: $localStorage.email
             };
 
             Video.create(details, function(success, data){

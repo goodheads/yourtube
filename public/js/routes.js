@@ -26,6 +26,18 @@ appRoutes.config(['$routeProvider', '$locationProvider', '$sceDelegateProvider',
          loginRequired: loginRequired
        }
     })
+    .when('/my_videos', {
+        templateUrl: './views/pages/my_videos.client.view.html',
+        resolve: {
+         loginRequired: loginRequired
+       }
+    })
+    .when('/my_videos/:id', {
+        templateUrl: './views/pages/edit_video.client.view.html',
+        resolve: {
+         loginRequired: loginRequired
+       }
+    })
     .when('/logout', {
         template: null,
         controller: 'LogoutCtrl',

@@ -1,6 +1,7 @@
 var secrets       = require('../../config/secrets'),
     slug          = require('slug'),
-    Video         = require('../models/video.server.model');
+    Video         = require('../models/video.server.model'),
+    Upload        = require('./upload.server.controller');
 
 module.exports = {
   /**
@@ -17,8 +18,13 @@ module.exports = {
       description: req.body.description,
       url: req.body.url,
       duration: req.body.duration,
-      format: req.body.format
+      format: req.body.format,
+      width: req.body.width,
+      height: req.body.height,
+      uploaded_by: req.body.uploaded_by
     });
+
+    console.log("Uploaded by", req.body.uploaded_by);
 
     video.save(function(err, result) {
       if (err) {
@@ -35,9 +41,70 @@ module.exports = {
    * @param  {void} res
    * @return {object}
    */
-  retrieveAll: function( req, res){
-    Video.find({}, function(err, videos) {
-      res.status(200).json(videos);
+  retrieveAll: function( req, res, next){
+
+    if(req.query.uploaded_by === undefined) {
+      Video.find({}, function(err, videos) {
+        if(err) {
+          return res.status(500).json({ message: err.message });
+        }
+        return res.status(200).json(videos);
+      });
+    } else {
+
+      // fetch all videos that have been uploaded by the logged in user
+      Video.find({ uploaded_by: req.query.uploaded_by }, function(err, videos) {
+        if(err) {
+          return res.status(500).json({ message: err.message });
+        }
+        return res.status(200).json({ success: true, videos: videos });
+      });
+   }
+  },
+
+  /**
+   * Fetch Each Video Details
+   * @param   req
+   * @param   res
+   * @param   next
+   * @return  Void
+   */
+  retrieveEachVideoDetails: function(req, res){
+    var publicId = req.params.public_id;
+
+    Video.findOne({ public_id: publicId }, function (err, video) {
+      if(err) {
+        return res.status(500).json({ message: err.message });
+      }
+
+      return res.json({success: true, video: video });
     });
   },
+
+  updateVideoDetails: function(req, res) {
+    var publicId = req.params.public_id;
+    var videoDetails = req.body;
+
+    Upload.tagVideos(req, res);
+
+    console.log("Format", req.body.format);
+    console.log("Audio", req.body.audio);
+
+    if(req.body.audio) {
+      var newVideoUrl = Upload.removeAudio(req, res);
+    }
+
+    if(req.body.videoBackground) {
+      var coloredVideoUrl = Upload.changeBackground(req, res);
+      console.log("Colored Video Url", coloredVideoUrl);
+    }
+
+    Video.update({public_id : publicId}, videoDetails, function (err) {
+      if(err) {
+        return res.status(404).json({success: false, message: 'User Details Not Found', err: err});
+      } else {
+        return res.status(200).json({success: true, message: 'Update Successful', audioUrl: newVideoUrl, colorVideoUrl: coloredVideoUrl });
+      }
+    });
+  }
 };

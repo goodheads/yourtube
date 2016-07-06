@@ -1,8 +1,9 @@
-app.controller('AuthController', ['$scope','$location','$auth','toastr', function($scope, $location, $auth, toastr) {
+app.controller('AuthController', ['$scope','$location','$auth','$localStorage', 'toastr', function($scope, $location, $auth, $localStorage, toastr) {
 
     $scope.login = function() {
       $auth.login($scope.user)
         .then(function() {
+          $localStorage.email = $scope.user.email;
           toastr.success('You have successfully signed in!');
           $location.path('/');
         })

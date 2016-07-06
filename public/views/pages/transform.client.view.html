@@ -1,0 +1,43 @@
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading">TRANSFORM A VIDEO</div>
+    <div class="panel-body">
+
+      <div class="row" ng-controller="TransformController">
+
+          <div class="col-sm-12" class="bs-callout">
+            <h5>{{ videos.title }}</h5>
+            <!-- 4:3 aspect ratio -->
+            <div class="embed-responsive embed-responsive-4by3">
+              <video width="320" height="240" poster="" controls >
+                <source ng-src="{{ videos.url | trustUrl }}" type="video/webm">
+                <source ng-src="{{ videos.url | trustUrl }}" type="video/mp4">
+                <source ng-src="{{ videos.url | trustUrl }}" type="video/ogg">
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <p> {{ videos.description }}</p>
+            <a href="/my_videos/{{ videos.public_id }}" class="btn" /> Edit </a>
+          </div>
+
+      </div>
+
+     <hr />
+
+
+    </div>
+  </div>
+    <div class="panel-footer text-center">
+      <ul class="list-inline">
+        <li><i class="ion-star"></i> stars</li>
+        <li><i class="ion-fork-repo"></i> forks</li>
+        <li><i class="ion-pull-request"></i> issues</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="text-center">
+  <a class="btn btn-default" href="https://github.com/goodheads/yourtube"><i class="ion-social-github"></i> GitHub project</a>
+  <a class="btn btn-default" href="https://github.com/goodheads/yourtube/issues/new"><i class="ion-bug"></i> Report issue</a>
+</div>
+</div>
