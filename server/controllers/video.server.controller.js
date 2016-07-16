@@ -121,6 +121,10 @@ module.exports = {
       console.log("Colored Video Url", coloredVideoUrl);
     }
 
+    var newFormatVideoUrl = Upload.changeFormat(req, res);
+    var videoThumbnail    = Upload.generateThumbnail(req, res);
+    var captionedVideoUrl = Upload.captionVideo(req, res);
+
     Video.update({public_id : publicId}, videoDetails, function (err) {
       if(err) {
         return res.status(404).json({success: false, message: 'User Details Not Found', err: err});
@@ -131,7 +135,10 @@ module.exports = {
           audioUrl: newVideoUrl,
           colorVideoUrl: coloredVideoUrl,
           resizeVideoUrl: resizeVideoUrl,
-          trimVideoUrl: trimVideoUrl
+          trimVideoUrl: trimVideoUrl,
+          newFormatVideoUrl: newFormatVideoUrl,
+          videoThumbnail: videoThumbnail,
+          captionedVideoUrl: captionedVideoUrl
         });
       }
     });

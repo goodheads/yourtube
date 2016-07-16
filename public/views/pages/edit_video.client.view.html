@@ -35,6 +35,35 @@
                     </div>
                 </div>
 
+                <!-- Add Video Caption -->
+                <div class="form_group">
+                    <label path="title"> Add Video Caption </label>
+                    <div class="form_controls">
+                      <input type="text" class="form-control" placeholder="Add Video Caption" ng-model="videoDetails.caption">
+                    </div>
+                </div>
+
+                <!-- Add format -->
+                <div class="form_group">
+                    <label path="title"> Current format: </label>
+                    <div class="form_controls">
+                      <input type="text" class="form-control" ng-model="videoDetails.format" readonly>
+                    </div>
+                </div>
+
+                <!-- Change format -->
+                <div class="form_group">
+                    <label path="title"> Change format to: </label>
+                    <div class="form_controls">
+                      <label>OGV</label>
+                      <input type="radio"  value="ogv"  ng-model="videoDetails.format" checked>
+                      <label>FLV</label>
+                      <input type="radio"  value="flv" ng-model="videoDetails.format">
+                      <label>WEBM</label>
+                      <input type="radio"  value="webm" ng-model="videoDetails.format">
+                    </div>
+                </div>
+
                 <div class="checkbox">
                     <label>
                        <input type="checkbox" ng-model="videoDetails.audio"> Remove Audio
@@ -103,6 +132,34 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-md-8">
+                <div class="form_controls">
+                    <div class="preview">
+                        <label> Video with New format: </label>
+                        <video controls ngf-src="videoDetails.formattedVideo" autoplay="autoplay">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="form_controls">
+                    <div class="preview">
+                        <label> Video with caption: </label>
+                        <video controls ngf-src="videoDetails.captionedVideo" autoplay="autoplay">
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="form_controls">
+                    <div class="preview">
+                        <label> Generated Thumbnail </label>
+                        <img ng-src="{{ videoDetails.generatedThumbnail }}">
+                    </div>
+                </div>
+            </div>
+
 
             <div class="row">
               <div class="col-md-8">

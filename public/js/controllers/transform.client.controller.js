@@ -18,7 +18,8 @@ app.controller('TransformController', ['$scope','$localStorage','$routeParams','
       startOffset: $scope.videoDetails.startOffset,
       duration: $scope.videoDetails.duration,
       videoBackground: $scope.videoDetails.backgroundColor,
-      url: $scope.videoDetails.url
+      url: $scope.videoDetails.url,
+      caption: $scope.videoDetails.caption
     };
 
     Video.updateVideoDetails($routeParams.id, videoDetails, function(success, data){
@@ -28,6 +29,9 @@ app.controller('TransformController', ['$scope','$localStorage','$routeParams','
         $scope.videoDetails.colorPreview = data.colorVideoUrl;
         $scope.videoDetails.resizedVideo = data.resizeVideoUrl;
         $scope.videoDetails.trimmedVideo = data.trimVideoUrl;
+        $scope.videoDetails.formattedVideo = data.newFormatVideoUrl;
+        $scope.videoDetails.generatedThumbnail =  data.videoThumbnail;
+        $scope.videoDetails.captionedVideo =  data.captionedVideoUrl;
       } else {
         toastr.error( data.message, 'Error', { timeOut: 2000 });
       }
