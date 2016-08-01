@@ -120,7 +120,7 @@ module.exports = {
         concat("upload/l_text:arial_20:" + caption + ",g_south,y_80," + "so_" + startOffset + "p,eo_100p/w_500/" + publicId + "." + format);
 
       return response;
-    }, 
+    },
 
     trimVideo: function(req, res) {
       var videoUrl = req.body.url;
