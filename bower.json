@@ -52,7 +52,8 @@
     "cloudinary_ng": "^1.0.0",
     "ng-dialog": "^0.6.2",
     "angular-confirm-modal": "^1.2.5",
-    "angular-bootstrap-confirm": "^2.3.0"
+    "angular-bootstrap-confirm": "^2.3.0",
+    "angularUtils-disqus": "angular-utils-disqus#^1.0.0"
   },
   "resolutions": {
     "angular": "1.4.12",

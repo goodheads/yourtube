@@ -8,15 +8,17 @@
           <div class="col-sm-4" ng-repeat="videos in allVideos" class="bs-callout">
             <h5>{{ videos.title }}</h5>
             <!-- 4:3 aspect ratio -->
-            <div class="embed-responsive embed-responsive-4by3">
-              <video width="320" height="240" poster="" controls >
-                <source ng-src="{{ videos.url | trustUrl }}" type="video/webm">
-                <source ng-src="{{ videos.url | trustUrl }}" type="video/mp4">
-                <source ng-src="{{ videos.url | trustUrl }}" type="video/ogg">
-                Your browser does not support the video tag.
-              </video>
-            </div>
-            <p> {{ videos.description }}</p>
+            <a href="/my_videos/{{ videos.public_id }}" />
+              <div class="embed-responsive embed-responsive-4by3">
+                <video width="320" height="240" poster="" controls >
+                  <source ng-src="{{ videos.url | trustUrl }}" type="video/webm">
+                  <source ng-src="{{ videos.url | trustUrl }}" type="video/mp4">
+                  <source ng-src="{{ videos.url | trustUrl }}" type="video/ogg">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <p> {{ videos.description }}</p>
+            </a>
           </div>
 
       </div>

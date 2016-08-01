@@ -9,6 +9,7 @@ var mongoose          = require('mongoose'),
     width:               { type: Number, required: true },
     height:              { type: Number, required: true },
     uploaded_by:         { type: String, required: true },
+    views:               { type: Number, required: true },
     time_uploaded:       { type: Date, default: Date.now }
 });
 

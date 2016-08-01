@@ -1,0 +1,39 @@
+{
+  "name": "angularUtils-disqus",
+  "version": "1.0.0",
+  "homepage": "https://github.com/michaelbromley/angularUtils/tree/master/src/directives/disqus",
+  "authors": [
+    "Michael Bromley <michael@michaelbromley.co.uk>"
+  ],
+  "description": "A directive to add a Disqus comments widget to an AngularJS app.",
+  "main": [
+    "dirDisqus.js"
+  ],
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "angularjs",
+    "disqus",
+    "directive",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "1.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0",
+    "commit": "4ff63e8f056be510aecafae72298200275751699"
+  },
+  "_source": "https://github.com/michaelbromley/angularUtils-disqus.git",
+  "_target": "^1.0.0",
+  "_originalSource": "angular-utils-disqus",
+  "_direct": true
+}

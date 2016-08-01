@@ -1,7 +1,6 @@
 app.controller('VideoController', ['$scope','$http','$localStorage','$location','$window', 'toastr','Video', function($scope, $http, $localStorage, $location, $window, toastr, Video) {
 
   $scope.listMyVideos = function() {
-
     Video.retrieveMyVideos($localStorage.email, function(success, data) {
       if(success) {
        $scope.myVideos = data.videos;
@@ -20,7 +19,7 @@ app.controller('VideoController', ['$scope','$http','$localStorage','$location',
       else{
         toastr.error("Error occurred. Update Failed", 'Error', { timeOut: 2000 });
       }
-    }); 
+    });
   };
 
   $scope.listMyVideos();

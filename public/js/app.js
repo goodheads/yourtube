@@ -16,7 +16,8 @@ var app = angular
               'angular-confirm',
               'mwl.confirm',
               'angularUtils.directives.dirDisqus',
-              'satellizer'])
+              'satellizer',
+              'angularUtils.directives.dirDisqus'])
   .config(['cfpLoadingBarProvider','$authProvider', 'cloudinaryProvider','$httpProvider', function(cfpLoadingBarProvider, $authProvider, cloudinaryProvider, $httpProvider) {
 
     $authProvider.baseUrl = '/';

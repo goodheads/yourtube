@@ -1,8 +1,27 @@
-app.controller('TransformController', ['$scope','$localStorage','$routeParams','Video', 'toastr', function($scope,$localStorage,$routeParams,Video,toastr) {
+app.controller('TransformController', ['$scope','$localStorage','$routeParams','Video', 'View', 'toastr', function($scope,$localStorage,$routeParams,Video,View,toastr) {
 
   Video.retrieveEachVideoDetails($routeParams.id, function(success, data){
     if(success){
       $scope.videoDetails = data.video;
+
+      var viewDetails = {
+        public_id : $routeParams.id
+      };
+
+      View.increment(viewDetails, function(success, data) {
+        if(success) {
+          console.log("incremented");
+        } else {
+          console.log("Something went wrong");
+        }
+      });
+
+    }
+  });
+
+  View.retrieveEachView($routeParams.id, function(success, data){
+    if(success){
+      $scope.views = data.views;
     }
   });
 

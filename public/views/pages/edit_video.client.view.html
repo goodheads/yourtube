@@ -11,6 +11,8 @@
               </video>
             </div>
 
+            <h5>No of Views:  {{ views.counter }}</h5>
+
             <form name="updateForm" ng-submit="updateVideo()">
                 <div class="form_group">
                     <label path="title"> Title: </label>
@@ -160,7 +162,6 @@
                 </div>
             </div>
 
-
             <div class="row">
               <div class="col-md-8">
                   <div class="form_controls">
@@ -173,6 +174,11 @@
             </div>
           </div>
 
+          <!-- Comments By Users on the videos -->
+          <dir-disqus disqus-shortname="yourtube" disqus-identifier="{{ videoDetails.id }}"
+              disqus-title="{{ videoDetails.title }}"
+              disqus-url="{{ videoDetails.id }}">
+          </dir-disqus>
       </div>
      <hr />
     </div>
