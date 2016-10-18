@@ -12,7 +12,6 @@ var app = angular
               'ngSanitize',
               'ngFileUpload',
               'toastr',
-              'ngLodash',
               'angular-confirm',
               'mwl.confirm',
               'angularUtils.directives.dirDisqus',
